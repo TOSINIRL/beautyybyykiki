@@ -41,6 +41,7 @@
     <main>
         <!-- Hero Section -->
         <section id="home" class="hero">
+            <canvas id="hero-canvas"></canvas>
             <div class="hero-overlay"></div>
             <div class="container hero-content">
                 <h1 class="fade-up">Luxury Styling <br>For The <span>Modern Woman</span></h1>
@@ -101,10 +102,30 @@
         <!-- About Section -->
         <section id="about" class="about">
             <div class="container about-grid">
-                <div class="about-img-placeholder reveal-left">
-                    <div class="placeholder-content">
-                        <i class="fa-solid fa-camera"></i>
-                        <span>Portraits Coming Soon</span>
+                <div class="about-carousel reveal-left">
+                    <div class="carousel-track">
+                        <div class="carousel-slide active">
+                            <img src="assets/kiki-1.jpg" alt="KiKi Styling Portfolio 1">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="assets/kiki-2.jpg" alt="KiKi Styling Portfolio 2">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="assets/kiki-3.jpg" alt="KiKi Styling Portfolio 3">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="assets/kiki-4.jpg" alt="KiKi Styling Portfolio 4">
+                        </div>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-btn prev" id="prevBtn"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="carousel-btn next" id="nextBtn"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                    <div class="carousel-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
                     </div>
                 </div>
                 <div class="about-content reveal-right">
@@ -122,13 +143,87 @@
             </div>
         </section>
 
-        <!-- Booking Section -->
+        <!-- Booking Section (Advanced Schedule System) -->
         <section id="booking" class="booking">
-            <div class="container">
-                <div class="booking-card glass reveal">
-                    <h2>Ready To <span>Level Up?</span></h2>
-                    <p>Appointments fill up fast! Secure your slot today for the ultimate beauty experience.</p>
-                    <a href="#" class="btn primary xl">Secure Your Slot</a>
+            <div class="container container-booking">
+                <div class="booking-grid">
+                    <!-- Calendar View -->
+                    <div class="booking-calendar-card reveal-left">
+                        <div class="calendar-wrapper">
+                            <div class="calendar-header">
+                                <button class="cal-nav-btn" id="prevMonth"><i class="fa-solid fa-chevron-left"></i></button>
+                                <h3 id="currentMonthAndYear" class="month-label">December 2025</h3>
+                                <button class="cal-nav-btn" id="nextMonth"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                            <div class="calendar-body">
+                                <div class="calendar-weekdays">
+                                    <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                                </div>
+                                <div class="calendar-days-grid" id="calendarDays">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+                            <div class="calendar-footer">
+                                <div class="legend">
+                                    <span class="legend-item"><i class="dot available"></i> Available</span>
+                                    <span class="legend-item"><i class="dot unavailable"></i> Unavailable</span>
+                                    <span class="legend-item"><i class="dot selected"></i> Selected</span>
+                                </div>
+                                <div class="calendar-notice info-box">
+                                    <p class="notice-text"><strong>Note:</strong> Christmas Eve (Dec 24), Christmas Day (Dec 25), and Boxing Day (Dec 26) are unavailable.</p>
+                                    <p class="notice-subtext">Select a date to view available time slots and book your appointment.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Time Slots & Confirm -->
+                    <div class="booking-details-card reveal-right">
+                        <div class="booking-details-content">
+                            <h3>Customize <span>Your Visit</span></h3>
+                            
+                            <div class="style-selection-wrapper">
+                                <label>Choose Your Style:</label>
+                                <div class="style-grid" id="styleGrid">
+                                    <div class="style-item" data-price="$180">
+                                        <div class="style-info">
+                                            <span class="style-name">Knotless Braids</span>
+                                            <span class="style-price">from $180</span>
+                                        </div>
+                                        <i class="fa-solid fa-circle-check check-icon"></i>
+                                    </div>
+                                    <div class="style-item" data-price="$150">
+                                        <div class="style-info">
+                                            <span class="style-name">Full Sew-In</span>
+                                            <span class="style-price">from $150</span>
+                                        </div>
+                                        <i class="fa-solid fa-circle-check check-icon"></i>
+                                    </div>
+                                    <div class="style-item" data-price="$200">
+                                        <div class="style-info">
+                                            <span class="style-name">Custom Wig Install</span>
+                                            <span class="style-price">from $200</span>
+                                        </div>
+                                        <i class="fa-solid fa-circle-check check-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="details-desc">Selected Date: <strong id="selectedDateLabel">None</strong></p>
+                            
+                            <div class="time-grid-wrapper">
+                                <label>Available Time Slots:</label>
+                                <div class="time-grid" id="timeGrid">
+                                    <!-- Populated by JS when date is clicked -->
+                                    <div class="time-placeholder">Please select a date to see times.</div>
+                                </div>
+                            </div>
+
+                            <div class="booking-summary">
+                                <button class="btn primary full-width" id="bookingBtn" disabled>Complete Selection First</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

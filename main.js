@@ -59,4 +59,348 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+    // --- About Section Carousel ---
+    const track = document.querySelector('.carousel-track');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const carouselDots = document.querySelectorAll('.dot');
+    
+    let currentSlide = 0;
+
+    const updateCarousel = (index) => {
+        if (!track) return;
+        track.style.transform = `translateX(-${index * 100}%)`;
+        carouselDots.forEach(dot => dot.classList.remove('active'));
+        carouselDots[index].classList.add('active');
+        currentSlide = index;
+    };
+
+    if (nextBtn && prevBtn) {
+        nextBtn.addEventListener('click', () => {
+            let nextIndex = (currentSlide + 1) % slides.length;
+            updateCarousel(nextIndex);
+        });
+
+        prevBtn.addEventListener('click', () => {
+            let prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+            updateCarousel(prevIndex);
+        });
+        
+        // Auto-play every 5 seconds
+        setInterval(() => {
+            let nextIndex = (currentSlide + 1) % slides.length;
+            updateCarousel(nextIndex);
+        }, 5000);
+    }
+
+    carouselDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            updateCarousel(index);
+        });
+    });
+
+    // Touch Swipe Support for Carousel
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    if (track) {
+        track.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        track.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+    }
+
+    const handleSwipe = () => {
+        const threshold = 50; // minimum distance to register a swipe
+        if (touchEndX < touchStartX - threshold) {
+            // Swipe Left -> Next Slide
+            let nextIndex = (currentSlide + 1) % slides.length;
+            updateCarousel(nextIndex);
+        } else if (touchEndX > touchStartX + threshold) {
+            // Swipe Right -> Prev Slide
+            let prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+            updateCarousel(prevIndex);
+        }
+    };
+
+    // --- Booking Calendar System ---
+    const monthYearLabel = document.getElementById('currentMonthAndYear');
+    const calendarDaysGrid = document.getElementById('calendarDays');
+    const timeGrid = document.getElementById('timeGrid');
+    const selectedDateLabel = document.getElementById('selectedDateLabel');
+    const bookingBtn = document.getElementById('bookingBtn');
+    const prevMonthBtn = document.getElementById('prevMonth');
+    const nextMonthBtn = document.getElementById('nextMonth');
+
+    let currentDate = new Date(2025, 11, 1); // December 2025 as default
+    let activeSelection = null;
+    let selectedStyle = null;
+    let selectedTime = null;
+
+    const updateBookingButton = () => {
+        if (!bookingBtn) return;
+        if (selectedStyle && activeSelection && selectedTime) {
+            bookingBtn.disabled = false;
+            bookingBtn.classList.remove('disabled');
+            bookingBtn.innerText = `Book ${selectedStyle} for ${selectedTime}`;
+            bookingBtn.style.opacity = "1";
+        } else {
+            bookingBtn.disabled = true;
+            bookingBtn.classList.add('disabled');
+            bookingBtn.style.opacity = "0.5";
+            if (!activeSelection) {
+                bookingBtn.innerText = "Start by Selecting a Date";
+            } else if (!selectedStyle) {
+                bookingBtn.innerText = "Next: Choose Your Style";
+            } else {
+                bookingBtn.innerText = "Final Step: Pick a Time";
+            }
+        }
+    };
+
+    // Style Selection Click Handler
+    const styleItems = document.querySelectorAll('.style-item');
+    styleItems.forEach(item => {
+        item.addEventListener('click', () => {
+            styleItems.forEach(i => i.classList.remove('selected'));
+            item.classList.add('selected');
+            selectedStyle = item.querySelector('.style-name').innerText;
+            updateBookingButton();
+        });
+    });
+
+    const renderCalendar = () => {
+        if (!calendarDaysGrid) return;
+        calendarDaysGrid.innerHTML = "";
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        
+        monthYearLabel.innerText = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+
+        const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+        const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+
+        // Empty slots for previous month days
+        for (let i = 0; i < firstDay; i++) {
+            const emptySpan = document.createElement('div');
+            emptySpan.classList.add('calendar-day', 'day-empty');
+            calendarDaysGrid.appendChild(emptySpan);
+        }
+
+        // Days of the month
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dayEl = document.createElement('div');
+            dayEl.classList.add('calendar-day');
+            dayEl.innerText = d;
+
+            // Specific Unavailable Dates (Dec 24, 25, 26) as per user screenshot
+            if (currentDate.getMonth() === 11 && (d === 24 || d === 25 || d === 26)) {
+                dayEl.classList.add('day-unavailable');
+            }
+
+            // Highlighting specific days from the screenshot for demo
+            if (currentDate.getMonth() === 11 && d === 3) dayEl.classList.add('day-active-selected');
+            if (currentDate.getMonth() === 11 && d === 27) dayEl.classList.add('day-selected-secondary');
+
+            dayEl.addEventListener('click', () => {
+                if (dayEl.classList.contains('day-unavailable')) return;
+                
+                document.querySelectorAll('.calendar-day').forEach(el => {
+                    el.classList.remove('day-active-selected');
+                    // Keep the demo's secondary selection visible unless clicked
+                });
+                
+                dayEl.classList.add('day-active-selected');
+                activeSelection = `${months[currentDate.getMonth()]} ${d}, ${currentDate.getFullYear()}`;
+                selectedDateLabel.innerText = activeSelection;
+                updateBookingButton();
+                renderTimeSlots();
+            });
+
+            calendarDaysGrid.appendChild(dayEl);
+        }
+    };
+
+    const renderTimeSlots = () => {
+        const times = ["10:00 AM", "11:30 AM", "1:30 PM", "3:00 PM", "4:30 PM"];
+        timeGrid.innerHTML = "";
+        times.forEach(t => {
+            const btn = document.createElement('button');
+            btn.classList.add('time-btn');
+            btn.innerText = t;
+            btn.onclick = () => {
+                document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedTime = t;
+                updateBookingButton();
+            };
+            timeGrid.appendChild(btn);
+        });
+    };
+
+    if (prevMonthBtn && nextMonthBtn) {
+        prevMonthBtn.onclick = () => {
+            currentDate.setMonth(currentDate.setMonth() - 1);
+            renderCalendar();
+        };
+
+        nextMonthBtn.onclick = () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        };
+    }
+
+    renderCalendar();
+
+    // --- Luxury GOLD DUST Particle System ---
+    const canvas = document.getElementById('hero-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null };
+
+        const resize = () => {
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            ctx.scale(dpr, dpr);
+            canvas.style.width = `${window.innerWidth}px`;
+            canvas.style.height = `${window.innerHeight}px`;
+            createParticles();
+        };
+
+        const updateMousePosition = (x, y) => {
+            mouse.x = x;
+            mouse.y = y;
+        };
+
+        window.addEventListener('mousemove', (e) => updateMousePosition(e.x, e.y));
+        window.addEventListener('touchstart', (e) => {
+            if (e.touches[0]) updateMousePosition(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: true });
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches[0]) updateMousePosition(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: true });
+        window.addEventListener('touchend', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        class Particle {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.x = Math.random() * window.innerWidth;
+                this.y = Math.random() * window.innerHeight;
+                this.size = Math.random() * 2.5 + 0.8; // Larger
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.color = '#4A3B2F'; // Rich Brown / Charcoal
+                this.opacity = Math.random() * 0.4 + 0.2; // Even more subtle
+                this.life = Math.random() * 100;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Mouse influence - Subtle Attraction
+                if (mouse.x && mouse.y) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 200) {
+                        this.x += dx / 120; // Slower, more elegant
+                        this.y += dy / 120;
+                    }
+                }
+
+                if (this.x < 0 || this.x > window.innerWidth) this.speedX *= -1;
+                if (this.y < 0 || this.y > window.innerHeight) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                // Subtle neutral shadow
+                ctx.shadowBlur = 2;
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        const createParticles = () => {
+            const count = Math.floor((window.innerWidth * window.innerHeight) / 7000); // Slightly fewer
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        };
+
+        const animate = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw mouse glow - Very Faint Neutral Glow
+            if (mouse.x && mouse.y) {
+                const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 300);
+                gradient.addColorStop(0, 'rgba(74, 59, 47, 0.08)'); // Very faint brown
+                gradient.addColorStop(1, 'rgba(245, 235, 224, 0)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            particles.forEach((p, i) => {
+                p.update();
+                p.draw();
+
+                // Connect nearby particles - Dark Brown / Black
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 120) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = '#0A0A0A'; // Black connections
+                        ctx.globalAlpha = (1 - distance / 120) * 0.1; // Very faint
+                        ctx.lineWidth = 0.4;
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+
+                // Connect particles to mouse - Subtle Brown
+                if (mouse.x && mouse.y) {
+                    const dx = p.x - mouse.x;
+                    const dy = p.y - mouse.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 180) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = '#4A3B2F'; // Brown connection
+                        ctx.globalAlpha = (1 - distance / 180) * 0.15;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animate);
+        };
+
+        resize();
+        createParticles();
+        animate();
+    }
 });
