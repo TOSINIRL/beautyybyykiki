@@ -938,6 +938,10 @@ footer {
         grid-template-columns: 1fr;
     }
     
+    .about-carousel {
+        box-shadow: 10px 10px 0 var(--primary-color);
+    }
+    
     .about-img {
         order: 2;
     }
@@ -946,6 +950,37 @@ footer {
         order: 1;
     }
     
+    .booking-calendar-card, .booking-details-card {
+        padding: 24px 15px; /* Less padding to fit on iPhone SE */
+    }
+
+    .calendar-days-grid {
+        gap: 6px;
+    }
+
+    .calendar-day {
+        width: 32px;
+        height: 32px;
+        font-size: 0.95rem;
+    }
+
+    .month-label {
+        font-size: 1.6rem;
+    }
+
+    .legend {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .style-item {
+        padding: 12px 15px;
+    }
+    
+    .contact-form {
+        margin-top: 10px; /* Fix any clipping from bottom elements */
+    }
+
     .footer-bottom {
         flex-direction: column;
         gap: 20px;
