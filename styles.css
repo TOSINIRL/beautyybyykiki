@@ -280,7 +280,8 @@ section {
 .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    gap: 40px;
+    margin-top: 40px;
 }
 
 .service-card {
@@ -297,15 +298,21 @@ section {
 }
 
 .service-img {
-    height: 280px;
+    height: auto;
+    aspect-ratio: 3 / 4;
     width: 100%;
-    overflow: hidden;
+    background: #FFFFFF; /* High-contrast background for the 'frame' */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px; /* Framing padding */
+    transition: var(--transition-smooth);
 }
 
 .service-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain; /* CRITICAL: No cropping as requested */
     transition: var(--transition-smooth);
 }
 
@@ -466,8 +473,44 @@ section {
     font-weight: 500;
 }
 
-.about-features i {
+.stylist-signature {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 40px 0 35px;
+    padding-top: 30px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.signature-img {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--primary-color);
+}
+
+.signature-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.signature-text .name {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2rem;
+    color: var(--text-main);
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.signature-text .role {
+    font-family: var(--ui-font);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     color: var(--primary-color);
+    font-weight: 700;
 }
 
 .glass {
@@ -945,14 +988,39 @@ footer {
     margin-bottom: 0;
 }
 
+.category-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.category-img {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--primary-color);
+    padding: 3px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.category-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
 .price-category h3 {
     font-family: var(--ui-font);
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     text-align: center;
     color: #FFFFFF;
-    text-transform: capitalize;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0;
     position: relative;
     display: flex;
     align-items: center;
@@ -1052,93 +1120,19 @@ footer {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(197, 160, 89, 0.3);
 }
-/* --- Appointment Confirmation --- */
-.appt-confirm-section {
-    background-color: var(--bg-card);
-    padding: 80px 0;
-    border-top: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
-}
-
-.appt-confirm-container {
-    max-width: 680px;
-    text-align: center;
-}
-
-.appt-confirm-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    margin-bottom: 40px;
-}
-
-.appt-confirm-title p {
-    font-family: var(--ui-font);
-    font-size: 0.9rem;
-    font-weight: 700;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--text-main);
-}
-
-.appt-dot {
-    color: var(--primary-color);
-    font-size: 0.7rem;
-}
-
-.appt-confirm-body {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    margin-bottom: 50px;
-}
-
-.appt-italic {
-    font-family: var(--heading-font);
-    font-style: italic;
-    font-size: 1.35rem;
-    line-height: 1.7;
-    color: var(--text-main) !important;
-}
-
-.appt-confirm-icons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-}
-
-.appt-icon-circle {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 1px solid var(--glass-border);
-    background: var(--bg-base);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    transition: var(--transition-smooth);
-}
-
-.appt-icon-circle:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-}
-
 @media (max-width: 1024px) {
     .services-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
     }
     
     .hero h1 {
         font-size: 3.5rem;
     }
-    
-    .service-img {
-        height: 240px;
+}
+
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -1155,15 +1149,6 @@ footer {
         display: block;
     }
     
-    .services-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .service-img {
-        height: 260px;
-    }
-
     .hero h1 {
         font-size: 2.8rem;
     }
@@ -1194,6 +1179,10 @@ footer {
         order: 1;
     }
     
+    .glossy-card {
+        padding: 40px 25px;
+    }
+
     .booking-calendar-card, .booking-details-card {
         padding: 24px 15px; /* Less padding to fit on iPhone SE */
     }
