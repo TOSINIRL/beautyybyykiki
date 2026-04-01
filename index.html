@@ -364,7 +364,33 @@
                     <!-- Time Slots & Confirm -->
                     <div class="booking-details-card reveal-right">
                         <div class="booking-details-content">
-                            <h3>Select Date & <span>Time</span></h3>
+                            <h3>1. Select <span>Service</span></h3>
+                            <div class="form-group" style="margin: 20px 0;">
+                                <select id="bookingService" class="booking-select">
+                                    <option value="" disabled selected>-- Choose Braids or Locs --</option>
+                                    <optgroup label="Women's Services">
+                                        <option value="Small knotless braids">Small knotless braids (From $180)</option>
+                                        <option value="Smedium knotless braids">Smedium knotless braids (From $140)</option>
+                                        <option value="Medium knotless braids">Medium knotless braids ($150)</option>
+                                        <option value="Boho Knotless Braids">Boho Knotless Braids (From $150)</option>
+                                        <option value="Faux locs">Faux locs ($150)</option>
+                                        <option value="Butterfly locs">Butterfly locs ($110)</option>
+                                    </optgroup>
+                                    <optgroup label="Men's Services">
+                                        <option value="Pop Smoke braids">Pop Smoke braids ($50)</option>
+                                        <option value="Men's Stitch braids">Stitch braids ($60)</option>
+                                        <option value="Men's Cornrows">Cornrows ($55)</option>
+                                        <option value="Men's Twists">Men's Twists ($60)</option>
+                                    </optgroup>
+                                    <optgroup label="Loc Services">
+                                        <option value="Loc retwist">Loc retwist ($70)</option>
+                                        <option value="Starter locs">Starter locs ($100)</option>
+                                        <option value="Retwist + Styling">Retwist + Styling ($90)</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            <h3>2. Select Date & <span>Time</span></h3>
 
                             <p class="details-desc" style="margin-top: 15px;">Selected Date: <strong id="selectedDateLabel">None</strong></p>
                             

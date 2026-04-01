@@ -181,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const timeGrid = document.getElementById('timeGrid');
     const selectedDateLabel = document.getElementById('selectedDateLabel');
     const bookingBtn = document.getElementById('bookingBtn');
+    const bookingService = document.getElementById('bookingService');
     const prevMonthBtn = document.getElementById('prevMonth');
     const nextMonthBtn = document.getElementById('nextMonth');
 
@@ -191,22 +192,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const updateBookingButton = () => {
         if (!bookingBtn) return;
-        if (activeSelection && selectedTime) {
+        const service = bookingService ? bookingService.value : null;
+
+        if (service && activeSelection && selectedTime) {
             bookingBtn.disabled = false;
             bookingBtn.classList.remove('disabled');
-            bookingBtn.innerText = `Book Appointment at ${selectedTime}`;
+            bookingBtn.innerText = `Book ${service} at ${selectedTime}`;
             bookingBtn.style.opacity = "1";
         } else {
             bookingBtn.disabled = true;
             bookingBtn.classList.add('disabled');
             bookingBtn.style.opacity = "0.5";
-            if (!activeSelection) {
-                bookingBtn.innerText = "Start by Selecting a Date";
+            
+            if (!service) {
+                bookingBtn.innerText = "Select a Service to Continue";
+            } else if (!activeSelection) {
+                bookingBtn.innerText = "Pick a Date for your Style";
             } else {
-                bookingBtn.innerText = "Next: Pick a Time";
+                bookingBtn.innerText = "Almost Done: Pick a Time";
             }
         }
     };
+
+    if (bookingService) {
+        bookingService.addEventListener('change', updateBookingButton);
+    }
 
     const renderCalendar = () => {
         if (!calendarDaysGrid) return;
