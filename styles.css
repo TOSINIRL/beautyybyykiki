@@ -298,21 +298,17 @@ section {
 }
 
 .service-img {
-    height: auto;
-    aspect-ratio: 3 / 4;
+    height: 420px;
     width: 100%;
-    background: #FFFFFF; /* High-contrast background for the 'frame' */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px; /* Framing padding */
+    overflow: hidden;
     transition: var(--transition-smooth);
 }
 
 .service-img img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* CRITICAL: No cropping as requested */
+    object-fit: cover;
+    object-position: top; /* Ensures the braids and hair design stay centered/at the top */
     transition: var(--transition-smooth);
 }
 
