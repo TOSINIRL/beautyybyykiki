@@ -11,9 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Mobile Menu Toggle (Basic Logic)
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    mobileMenuBtn.addEventListener('click', () => {
-        alert('Mobile menu functionality would open a sleek drawer here.');
-    });
+    const navLinksList = document.querySelector('.nav-links');
+    
+    if (mobileMenuBtn && navLinksList) {
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinksList.classList.toggle('active');
+        });
+    }
 
     // Scroll Reveal Animations
     const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
@@ -44,7 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Smooth Scroll for Nav Links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    const navLinks = document.querySelectorAll('.nav-links a, .nav-cta a, .hero-actions a');
+    
+    navLinks.forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
@@ -52,13 +58,49 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
+                const headerOffset = 70;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
                 window.scrollTo({
-                    top: targetElement.offsetTop - 80,
+                    top: offsetPosition,
                     behavior: 'smooth'
                 });
+                
+                // If mobile menu is open, close it (basic logic)
+                const mobileNav = document.querySelector('.nav-links');
+                if (mobileNav && mobileNav.classList.contains('active')) {
+                   mobileNav.classList.remove('active');
+                }
             }
         });
     });
+
+    // Active Link Highlighting on Scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navItems = document.querySelectorAll('.nav-links a');
+
+    const highlightNav = () => {
+        let scrollY = window.pageYOffset;
+        
+        sections.forEach(current => {
+            const sectionHeight = current.offsetHeight;
+            const sectionTop = current.offsetTop - 100;
+            const sectionId = current.getAttribute('id');
+            
+            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                navItems.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    };
+
+    window.addEventListener('scroll', highlightNav);
+    highlightNav();
     // --- About Section Carousel ---
     const track = document.querySelector('.carousel-track');
     const slides = document.querySelectorAll('.carousel-slide');

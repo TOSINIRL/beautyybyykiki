@@ -87,10 +87,12 @@ header {
 }
 
 header.scrolled {
-    height: 70px;
-    background-color: var(--bg-base);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--glass-border);
+    height: 80px;
+    background-color: rgba(245, 235, 224, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
 }
 
 header nav {
@@ -121,8 +123,28 @@ header nav {
     color: var(--text-secondary); /* Brownish nav links */
 }
 
-.nav-links a:hover {
+.nav-links a:hover, .nav-links a.active {
     color: var(--primary-color);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after, .nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-links a {
+    position: relative;
+    padding: 5px 0;
 }
 
 .nav-cta {
@@ -1138,7 +1160,41 @@ footer {
         padding: 0 20px;
     }
 
-    .nav-links, .nav-cta {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: rgba(245, 235, 224, 0.98);
+        padding: 30px;
+        flex-direction: column;
+        gap: 25px;
+        align-items: center;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        z-index: 999;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+    }
+
+    .nav-links.active {
+        display: flex;
+        animation: slideDownFade 0.4s ease forwards;
+    }
+
+    @keyframes slideDownFade {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .nav-cta {
         display: none;
     }
     
