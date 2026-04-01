@@ -71,8 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateCarousel = (index) => {
         if (!track) return;
         track.style.transform = `translateX(-${index * 100}%)`;
+        
         carouselDots.forEach(dot => dot.classList.remove('active'));
-        carouselDots[index].classList.add('active');
+        if (carouselDots[index]) carouselDots[index].classList.add('active');
+        
+        slides.forEach(slide => slide.classList.remove('active'));
+        if (slides[index]) slides[index].classList.add('active');
+        
         currentSlide = index;
     };
 
@@ -144,10 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const updateBookingButton = () => {
         if (!bookingBtn) return;
-        if (selectedStyle && activeSelection && selectedTime) {
+        if (activeSelection && selectedTime) {
             bookingBtn.disabled = false;
             bookingBtn.classList.remove('disabled');
-            bookingBtn.innerText = `Book ${selectedStyle} for ${selectedTime}`;
+            bookingBtn.innerText = `Book Appointment at ${selectedTime}`;
             bookingBtn.style.opacity = "1";
         } else {
             bookingBtn.disabled = true;
@@ -155,24 +160,11 @@ document.addEventListener('DOMContentLoaded', () => {
             bookingBtn.style.opacity = "0.5";
             if (!activeSelection) {
                 bookingBtn.innerText = "Start by Selecting a Date";
-            } else if (!selectedStyle) {
-                bookingBtn.innerText = "Next: Choose Your Style";
             } else {
-                bookingBtn.innerText = "Final Step: Pick a Time";
+                bookingBtn.innerText = "Next: Pick a Time";
             }
         }
     };
-
-    // Style Selection Click Handler
-    const styleItems = document.querySelectorAll('.style-item');
-    styleItems.forEach(item => {
-        item.addEventListener('click', () => {
-            styleItems.forEach(i => i.classList.remove('selected'));
-            item.classList.add('selected');
-            selectedStyle = item.querySelector('.style-name').innerText;
-            updateBookingButton();
-        });
-    });
 
     const renderCalendar = () => {
         if (!calendarDaysGrid) return;
