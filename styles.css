@@ -314,13 +314,32 @@ section {
     border-radius: 12px;
     overflow: hidden;
     transition: var(--transition-smooth);
-    transform-style: preserve-3d;
-    perspective: 1000px;
+    position: relative;
+}
+
+.service-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(197, 160, 89, 0.2) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-25deg);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.service-card:hover::after {
+    left: 150%;
+    transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .service-card:hover {
     transform: translateY(-10px);
     border-color: var(--primary-color);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 0 20px rgba(197, 160, 89, 0.2);
 }
 
 .service-img {
