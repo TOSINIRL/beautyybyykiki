@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const createParticles = () => {
-            const count = Math.floor((window.innerWidth * window.innerHeight) / 7000); // Slightly fewer
+            const count = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 10000), 60); 
             particles = [];
             for (let i = 0; i < count; i++) {
                 particles.push(new Particle());
@@ -411,16 +411,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     const p2 = particles[j];
                     const dx = p.x - p2.x;
                     const dy = p.y - p2.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (Math.abs(dx) < 120 && Math.abs(dy) < 120) {
+                        const distance = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < 120) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = '#0A0A0A'; // Black connections
-                        ctx.globalAlpha = (1 - distance / 120) * 0.1; // Very faint
-                        ctx.lineWidth = 0.4;
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
+                        if (distance < 120) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = '#0A0A0A'; // Black connections
+                            ctx.globalAlpha = (1 - distance / 120) * 0.1; // Very faint
+                            ctx.lineWidth = 0.4;
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
                     }
                 }
 
