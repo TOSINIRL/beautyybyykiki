@@ -353,17 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const stylistTemplateID = "template_ogx7wxe";
                 const clientTemplateID = "template_7t6ikwf";
 
-                // 1. Send Alert Email to Stylist
-                const emailPromise = emailjs.send(serviceID, stylistTemplateID, {
-                    client_name: bookingData.name,
-                    client_email: bookingData.email,
-                    client_phone: bookingData.phone,
-                    service_type: bookingData.service,
-                    appointment_date: bookingData.date,
-                    appointment_time: bookingData.time,
-                    add_design: bookingData.addDesign,
-                    to_email: "kikikanu12@gmail.com"
-                });
+                // 1. (Stylist Email Alert Removed per request - relying on SMS)
 
                 // 2. Send SMS alert to Stylist (Telus)
                 const smsPromise = emailjs.send(serviceID, stylistTemplateID, {
@@ -387,7 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     to_email: bookingData.email
                 });
 
-                const results = await Promise.all([emailPromise, smsPromise, clientPromise]);
+                const results = await Promise.all([smsPromise, clientPromise]);
 
                 if (results[0].status === 200) {
                     // SAVE BOOKING TO FIREBASE to block out the time slot
