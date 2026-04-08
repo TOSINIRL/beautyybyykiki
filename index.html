@@ -361,21 +361,31 @@
                     <span class="subtitle">Client Love</span>
                     <h2>What They <span>Say</span></h2>
                 </div>
-                <div class="testimonial-grid">
-                    <div class="testimonial-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"KiKi is so professional and gentle with my edges! The knotless braids lasted over 6 weeks and still looked fresh. Highly recommend!"</p>
-                        <span class="client-name">— Sarah T.</span>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"First time getting a retwist from her and I won't go anywhere else. The studio vibe is amazing and she actually cares about your hair health."</p>
-                        <span class="client-name">— Marcus D.</span>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"Absolutely obsessed with my boho braids! She perfectly matched the curly pieces to my texture. Worth every single penny."</p>
-                        <span class="client-name">— Jessica L.</span>
+                <div class="testimonial-grid" id="liveReviewsContainer">
+                    <!-- Future real reviews will be manually added here by developer when forwarded by KiKi -->
+                </div>
+
+                <div class="review-submission-wrapper" style="max-width: 600px; margin: 40px auto 0;">
+                    <div class="testimonial-card" style="border-width: 2px;">
+                        <h3 style="text-align: center; margin-bottom: 15px; font-family: var(--heading-font);">Leave a Review</h3>
+                        <p style="text-align: center; margin-bottom: 25px; font-size: 0.95rem; color: var(--text-secondary);">Loved your hair? Let us know about your experience!</p>
+                        
+                        <form id="reviewForm" class="contact-form" style="margin-top: 0;">
+                            <div class="form-group" style="margin-bottom: 15px;">
+                                <input type="text" id="reviewName" placeholder="Your First Name & Last Initial (e.g. Tosin A.)" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 15px;">
+                                <select id="reviewRating" class="booking-select" required style="width:100%; border:1px solid rgba(212, 175, 55, 0.2); background:rgba(42, 42, 42, 0.05); color:var(--text-main); font-family:'Inter', sans-serif; padding:15px 20px; border-radius:12px;">
+                                    <option value="5 Stars">★★★★★ 5 Stars</option>
+                                    <option value="4 Stars">★★★★☆ 4 Stars</option>
+                                    <option value="3 Stars">★★★☆☆ 3 Stars</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 15px;">
+                                <textarea id="reviewText" placeholder="Tell us about your experience..." rows="4" required></textarea>
+                            </div>
+                            <button type="submit" id="reviewSubmit" class="btn primary" style="width: 100%;">Submit Review to KiKi</button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -93,6 +93,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Review Form Submission Handling
+    const reviewForm = document.getElementById('reviewForm');
+    const reviewSubmit = document.getElementById('reviewSubmit');
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('reviewName').value;
+            const rating = document.getElementById('reviewRating').value;
+            const text = document.getElementById('reviewText').value;
+            
+            if (reviewSubmit) reviewSubmit.innerText = "Sending Review...";
+            
+            try {
+                // Re-using the stylist template for sending the review alert
+                await emailjs.send("service_aj78gfg", "template_ogx7wxe", {
+                    client_name: name,
+                    client_email: "No Email Provided",
+                    client_phone: "N/A",
+                    service_type: "NEW CLIENT REVIEW: " + rating,
+                    appointment_date: "N/A",
+                    appointment_time: "N/A",
+                    add_design: "REVIEW TEXT: " + text,
+                    to_email: "kikikanu12@gmail.com"
+                });
+                alert('Thank you for your review! KiKi really appreciates it 🤎');
+                reviewForm.reset();
+                if (reviewSubmit) reviewSubmit.innerText = "Submit Review to KiKi";
+            } catch (err) {
+                console.error(err);
+                alert('Oops! There was an issue sending your review.');
+                if (reviewSubmit) reviewSubmit.innerText = "Submit Review to KiKi";
+            }
+        });
+    }
+
     // FAQ Accordion
     const faqItems = document.querySelectorAll('.faq-item');
     faqItems.forEach(item => {
