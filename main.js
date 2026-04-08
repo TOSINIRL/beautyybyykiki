@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const serviceID = "service_aj78gfg";
-                const stylistTemplateID = "template_ieii16g";
+                const stylistTemplateID = "template_ogx7wxe";
                 const clientTemplateID = "template_7t6ikwf";
 
                 // 1. Send Alert Email to Stylist
