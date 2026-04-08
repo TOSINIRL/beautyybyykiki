@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
             bookingBtn.disabled = true;
 
             try {
-                const serviceID = "service_g351uza";
+                const serviceID = "service_aj78gfg";
                 const stylistTemplateID = "template_ieii16g";
                 const clientTemplateID = "template_7t6ikwf";
 
