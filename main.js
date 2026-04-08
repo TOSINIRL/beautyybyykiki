@@ -360,7 +360,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         try {
                             const safeDate = activeSelection.replace(/[, ]+/g, "_");
                             const safeTime = selectedTime.replace(/[: ]+/g, "_");
-                            await database.ref('bookings/' + safeDate + '/' + safeTime).set({
+                            // Fire and forget, don't await so the success modal opens instantly
+                            database.ref('bookings/' + safeDate + '/' + safeTime).set({
                                 booked: true,
                                 clientName: bookingData.name,
                                 timestamp: Date.now()
@@ -503,12 +504,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (database && activeSelection) {
             try {
                 const safeDate = activeSelection.replace(/[, ]+/g, "_");
-                const snapshot = await database.ref('bookings/' + safeDate).once('value');
+                
+                // Add a 3-second timeout so the calendar doesn't get stuck if internet or database is slow
+                const fetchPromise = database.ref('bookings/' + safeDate).once('value');
+                const timeoutPromise = new Promise((resolve, reject) => {
+                    setTimeout(() => reject(new Error("Firebase connection timed out")), 3000);
+                });
+                
+                const snapshot = await Promise.race([fetchPromise, timeoutPromise]);
+                
                 if (snapshot.exists()) {
                     bookedTimes = snapshot.val();
                 }
             } catch (err) {
-                console.error("Failed to fetch slots from Firebase:", err);
+                console.warn("Could not fetch taken slots (showing all as available):", err);
             }
         }
 
