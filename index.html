@@ -22,13 +22,11 @@
 </head>
 <body>
     <div class="grain-overlay"></div>
-    <div class="custom-cursor"></div>
-    <div class="custom-cursor-outline"></div>
 
     <header id="header">
         <nav class="container">
             <div class="logo">
-                <a href="#"><img src="../portfolio_v2/assets/images/beautyybyykiki_logo.png" alt="BeautyybyyKiKi Hair Artistry" style="height: 60px; filter: brightness(1.1);"></a>
+                <a href="#"><img src="assets/beautyybyykiki_logo.png" alt="BeautyybyyKiKi Hair Artistry" style="height: 60px; filter: brightness(1.1);"></a>
             </div>
             <ul class="nav-links">
                 <li><a href="#home" class="magnetic">Home</a></li>
@@ -515,48 +513,7 @@
               .from(".hero p", { y: 20, opacity: 0, duration: 1 }, "-=1")
               .from(".hero-actions", { y: 20, opacity: 0, duration: 1 }, "-=0.8");
 
-        // Custom Luxury Cursor Logic
-        const cursor = document.querySelector('.custom-cursor');
-        const cursorOutline = document.querySelector('.custom-cursor-outline');
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
-        let outlineX = 0, outlineY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function updateCursor() {
-            if (window.matchMedia("(pointer: coarse)").matches) {
-                cursor.style.display = 'none';
-                cursorOutline.style.display = 'none';
-                return;
-            }
-            
-            // Smooth cursor movement
-            cursorX += (mouseX - cursorX) * 0.15;
-            cursorY += (mouseY - cursorY) * 0.15;
-            outlineX += (mouseX - outlineX) * 0.1;
-            outlineY += (mouseY - outlineY) * 0.1;
-
-            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
-            cursorOutline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0)`;
-
-            requestAnimationFrame(updateCursor);
-        }
-        updateCursor();
-
-        // Cursor Hover Interaction
-        const hoverTargets = document.querySelectorAll('a, button, .service-card, .logo');
-        hoverTargets.forEach((target) => {
-            target.addEventListener('mouseenter', () => {
-                document.body.classList.add('cursor-hover');
-            });
-            target.addEventListener('mouseleave', () => {
-                document.body.classList.remove('cursor-hover');
-            });
-        });
+        // Cursor logic removed per request
 
         // Magnetic Logic
         const magneticElements = document.querySelectorAll('.magnetic');
