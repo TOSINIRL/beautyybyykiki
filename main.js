@@ -269,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     to_email: "kikikanu12@gmail.com"
                 });
 
+                // 2. Send SMS alert to Stylist (Telus)
                 const smsPromise = emailjs.send(serviceID, templateID, {
                     client_name: bookingData.name,
                     client_email: bookingData.email,
@@ -279,7 +280,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     to_email: "6479067715@msg.telus.com"
                 });
 
-                const results = await Promise.all([emailPromise, smsPromise]);
+                // 3. Send Confirmation Email to the CLIENT
+                const clientPromise = emailjs.send(serviceID, templateID, {
+                    client_name: bookingData.name,
+                    client_email: bookingData.email,
+                    client_phone: bookingData.phone,
+                    service_type: bookingData.service,
+                    appointment_date: bookingData.date,
+                    appointment_time: bookingData.time,
+                    to_email: bookingData.email // Send to the customer!
+                });
+
+                const results = await Promise.all([emailPromise, smsPromise, clientPromise]);
 
                 if (results[0].status === 200) {
                     alert(`Congratulations ${bookingData.name}! Your appointment for ${bookingData.service} on ${activeSelection} at ${selectedTime} has been requested. KiKi will contact you at ${bookingData.phone} to confirm!`);
