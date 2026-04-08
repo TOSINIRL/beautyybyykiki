@@ -1,4 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- FIREBASE INITIALIZATION ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyDvPe8aK-AGsiCg_k409JWaV_xWezp_xFQ",
+        authDomain: "beautyybyykiki.firebaseapp.com",
+        databaseURL: "https://beautyybyykiki-default-rtdb.firebaseio.com",
+        projectId: "beautyybyykiki",
+        storageBucket: "beautyybyykiki.firebasestorage.app",
+        messagingSenderId: "267995370922",
+        appId: "1:267995370922:web:a45c9d55b9c7c1de5fc7d3"
+    };
+    
+    if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const database = typeof firebase !== 'undefined' ? firebase.database() : null;
+
     // Header Scroll Effect
     const header = document.querySelector('header');
     window.addEventListener('scroll', () => {
@@ -295,6 +311,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 const results = await Promise.all([emailPromise, smsPromise, clientPromise]);
 
                 if (results[0].status === 200) {
+                    // SAVE BOOKING TO FIREBASE to block out the time slot
+                    if (database && activeSelection && selectedTime) {
+                        try {
+                            const safeDate = activeSelection.replace(/[, ]+/g, "_");
+                            const safeTime = selectedTime.replace(/[: ]+/g, "_");
+                            await database.ref('bookings/' + safeDate + '/' + safeTime).set({
+                                booked: true,
+                                clientName: bookingData.name,
+                                timestamp: Date.now()
+                            });
+                        } catch (firebaseErr) {
+                            console.error("Firebase save error:", firebaseErr);
+                        }
+                    }
+
                     const successModal = document.getElementById('successModal');
                     const modalMessage = document.getElementById('modalMessage');
                     const closeModal = document.getElementById('closeModal');
@@ -348,6 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (clientPhone) clientPhone.value = "";
                     activeSelection = null;
                     selectedTime = null;
+                    if (timeGrid) timeGrid.innerHTML = "<div class='time-placeholder'>Please select a date to see times.</div>";
                     updateBookingButton();
                     renderCalendar();
                 } else {
@@ -413,23 +445,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const renderTimeSlots = () => {
+    const renderTimeSlots = async () => {
         const times = [
             "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", 
             "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", 
             "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM"
         ];
+        
+        // Show loading state
+        timeGrid.innerHTML = "<div class='time-placeholder' style='grid-column: 1/-1;'>Checking availability...</div>";
+
+        let bookedTimes = {};
+        if (database && activeSelection) {
+            try {
+                const safeDate = activeSelection.replace(/[, ]+/g, "_");
+                const snapshot = await database.ref('bookings/' + safeDate).once('value');
+                if (snapshot.exists()) {
+                    bookedTimes = snapshot.val();
+                }
+            } catch (err) {
+                console.error("Failed to fetch slots from Firebase:", err);
+            }
+        }
+
         timeGrid.innerHTML = "";
         times.forEach(t => {
             const btn = document.createElement('button');
+            const safeTime = t.replace(/[: ]+/g, "_");
+            
             btn.classList.add('time-btn');
-            btn.innerText = t;
-            btn.onclick = () => {
-                document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                selectedTime = t;
-                updateBookingButton();
-            };
+            
+            if (bookedTimes[safeTime]) {
+                btn.innerText = "Taken";
+                btn.disabled = true;
+                btn.style.opacity = "0.3";
+                btn.style.cursor = "not-allowed";
+                btn.style.textDecoration = "line-through";
+                btn.classList.add('disabled-time');
+            } else {
+                btn.innerText = t;
+                btn.onclick = () => {
+                    document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedTime = t;
+                    updateBookingButton();
+                };
+            }
             timeGrid.appendChild(btn);
         });
     };
