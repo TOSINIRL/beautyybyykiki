@@ -21,20 +21,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
+    <div class="grain-overlay"></div>
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-outline"></div>
+
     <header id="header">
         <nav class="container">
             <div class="logo">
-                <a href="#">Beautyybyy<span>KiKi</span></a>
+                <a href="#"><img src="../portfolio_v2/assets/images/beautyybyykiki_logo.png" alt="BeautyybyyKiKi Hair Artistry" style="height: 60px; filter: brightness(1.1);"></a>
             </div>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home" class="magnetic">Home</a></li>
+                <li><a href="#services" class="magnetic">Services</a></li>
+                <li><a href="#about" class="magnetic">About</a></li>
+                <li><a href="#pricing" class="magnetic">Pricing</a></li>
+                <li><a href="#contact" class="magnetic">Contact</a></li>
             </ul>
             <div class="nav-cta">
-                <a href="#booking" class="btn primary">Book Now</a>
+                <a href="#booking" class="btn primary magnetic">Book Now</a>
             </div>
             <div class="mobile-menu-btn">
                 <i class="fa-solid fa-bars"></i>
@@ -49,7 +53,13 @@
             <div class="hero-overlay"></div>
             <div class="hero-content reveal">
                 <span class="subtitle">Welcome to BeautyybyyKiKi</span>
-                <h1>Precision Styling For The <span>Modern Crown</span></h1>
+                <h1>
+                    <span class="reveal-text-container"><span class="reveal-text-line">Precision</span></span>
+                    <span class="reveal-text-container"><span class="reveal-text-line">Styling</span></span>
+                    <span class="reveal-text-container"><span class="reveal-text-line">For</span></span>
+                    <span class="reveal-text-container"><span class="reveal-text-line">The</span></span>
+                    <span class="reveal-text-container"><span class="reveal-text-line"><span>Modern Crown</span></span></span>
+                </h1>
                 <p>Specializing in precision braids & loc care. Precision braids, custom twists, and expert loc care designed to elevate your crown.</p>
                 <div class="hero-actions fade-up-delay-2">
                     <a href="#booking" class="btn primary lg">Book Appointment</a>
@@ -406,6 +416,19 @@
                                 </div>
                             </div>
 
+                            <h3>3. Contact <span>Information</span></h3>
+                            <div class="booking-contact-fields" style="margin-top: 20px;">
+                                <div class="form-group mb-15">
+                                    <input type="text" id="clientName" class="booking-input" placeholder="Your Full Name" required>
+                                </div>
+                                <div class="form-group mb-15">
+                                    <input type="email" id="clientEmail" class="booking-input" placeholder="Email Address" required>
+                                </div>
+                                <div class="form-group mb-15">
+                                    <input type="tel" id="clientPhone" class="booking-input" placeholder="Phone Number (for confirmation text)" required>
+                                </div>
+                            </div>
+
                             <div class="booking-summary">
                                 <button class="btn primary full-width" id="bookingBtn" disabled>Complete Selection First</button>
                             </div>
@@ -478,10 +501,88 @@
 
         // Hero Animation
         const heroTl = gsap.timeline({ defaults: { ease: "expo.out" } });
-        heroTl.from(".hero-content span", { y: 20, opacity: 0, duration: 1, delay: 0.5 })
-              .from(".hero h1", { y: 30, opacity: 0, duration: 1.2 }, "-=0.8")
+        
+        // Split text reveal logic
+        gsap.to(".hero .reveal-text-line", {
+            y: "0%",
+            duration: 1.5,
+            stagger: 0.1,
+            delay: 0.5,
+            ease: "expo.out"
+        });
+
+        heroTl.from(".hero-content .subtitle", { y: 20, opacity: 0, duration: 1, delay: 0.5 })
               .from(".hero p", { y: 20, opacity: 0, duration: 1 }, "-=1")
               .from(".hero-actions", { y: 20, opacity: 0, duration: 1 }, "-=0.8");
+
+        // Custom Luxury Cursor Logic
+        const cursor = document.querySelector('.custom-cursor');
+        const cursorOutline = document.querySelector('.custom-cursor-outline');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let outlineX = 0, outlineY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function updateCursor() {
+            if (window.matchMedia("(pointer: coarse)").matches) {
+                cursor.style.display = 'none';
+                cursorOutline.style.display = 'none';
+                return;
+            }
+            
+            // Smooth cursor movement
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            outlineX += (mouseX - outlineX) * 0.1;
+            outlineY += (mouseY - outlineY) * 0.1;
+
+            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+            cursorOutline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0)`;
+
+            requestAnimationFrame(updateCursor);
+        }
+        updateCursor();
+
+        // Cursor Hover Interaction
+        const hoverTargets = document.querySelectorAll('a, button, .service-card, .logo');
+        hoverTargets.forEach((target) => {
+            target.addEventListener('mouseenter', () => {
+                document.body.classList.add('cursor-hover');
+            });
+            target.addEventListener('mouseleave', () => {
+                document.body.classList.remove('cursor-hover');
+            });
+        });
+
+        // Magnetic Logic
+        const magneticElements = document.querySelectorAll('.magnetic');
+        magneticElements.forEach((el) => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                gsap.to(el, {
+                    x: x * 0.35,
+                    y: y * 0.35,
+                    duration: 0.6,
+                    ease: "power2.out"
+                });
+            });
+
+            el.addEventListener('mouseleave', () => {
+                gsap.to(el, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "elastic.out(1, 0.3)"
+                });
+            });
+        });
 
         // Section Reveal
         gsap.utils.toArray("section").forEach(section => {

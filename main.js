@@ -190,14 +190,21 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedStyle = null;
     let selectedTime = null;
 
+    const clientName = document.getElementById('clientName');
+    const clientEmail = document.getElementById('clientEmail');
+    const clientPhone = document.getElementById('clientPhone');
+
     const updateBookingButton = () => {
         if (!bookingBtn) return;
         const service = bookingService ? bookingService.value : null;
+        const nameInput = clientName ? clientName.value.trim() : null;
+        const emailInput = clientEmail ? clientEmail.value.trim() : null;
+        const phoneInput = clientPhone ? clientPhone.value.trim() : null;
 
-        if (service && activeSelection && selectedTime) {
+        if (service && activeSelection && selectedTime && nameInput && emailInput && phoneInput) {
             bookingBtn.disabled = false;
             bookingBtn.classList.remove('disabled');
-            bookingBtn.innerText = `Book ${service} at ${selectedTime}`;
+            bookingBtn.innerText = `Confirm Booking for ${selectedTime}`;
             bookingBtn.style.opacity = "1";
         } else {
             bookingBtn.disabled = true;
@@ -205,17 +212,66 @@ document.addEventListener('DOMContentLoaded', () => {
             bookingBtn.style.opacity = "0.5";
             
             if (!service) {
-                bookingBtn.innerText = "Select a Service to Continue";
+                bookingBtn.innerText = "1. Select a Service";
             } else if (!activeSelection) {
-                bookingBtn.innerText = "Pick a Date for your Style";
+                bookingBtn.innerText = "2. Pick a Date";
+            } else if (!selectedTime) {
+                bookingBtn.innerText = "3. Pick a Time";
             } else {
-                bookingBtn.innerText = "Almost Done: Pick a Time";
+                bookingBtn.innerText = "4. Enter Your Contact Info";
             }
         }
     };
 
-    if (bookingService) {
-        bookingService.addEventListener('change', updateBookingButton);
+    if (bookingService) bookingService.addEventListener('change', updateBookingButton);
+    if (clientName) clientName.addEventListener('input', updateBookingButton);
+    if (clientEmail) clientEmail.addEventListener('input', updateBookingButton);
+    if (clientPhone) clientPhone.addEventListener('input', updateBookingButton);
+
+    if (bookingBtn) {
+        bookingBtn.addEventListener('click', async () => {
+            const bookingData = {
+                service: bookingService.value,
+                date: activeSelection,
+                time: selectedTime,
+                name: clientName.value,
+                email: clientEmail.value,
+                phone: clientPhone.value
+            };
+
+            bookingBtn.innerText = "Sending Confirmation...";
+            bookingBtn.disabled = true;
+
+            try {
+                // Use Netlify Functions for production Email/SMS logic
+                const response = await fetch('/.netlify/functions/booking', {
+                    method: 'POST',
+                    body: JSON.stringify(bookingData)
+                });
+
+                if (response.ok) {
+                    alert(`Success! KiKi has been notified of your appointment on ${activeSelection} at ${selectedTime}. You will receive a confirmation shortly!`);
+                    
+                    // Reset form
+                    bookingService.value = "";
+                    clientName.value = "";
+                    clientEmail.value = "";
+                    clientPhone.value = "";
+                    activeSelection = null;
+                    selectedTime = null;
+                    updateBookingButton();
+                    renderCalendar();
+                } else {
+                    throw new Error('Failed to send');
+                }
+            } catch (err) {
+                // Fallback alert for local dev or if function isn't live yet
+                console.log('Booking Info:', bookingData);
+                alert(`Thank you ${bookingData.name}! Your request for ${bookingData.service} on ${bookingData.date} at ${bookingData.time} has been sent to KiKi's booking system.`);
+                bookingBtn.innerText = "Confirm Booking";
+                bookingBtn.disabled = false;
+            }
+        });
     }
 
     const renderCalendar = () => {

@@ -26,6 +26,78 @@
     --section-spacing: 120px;
 }
 
+/* Custom Luxury Cursor */
+.custom-cursor {
+    width: 12px;
+    height: 12px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease-out;
+}
+
+.custom-cursor-outline {
+    width: 35px;
+    height: 35px;
+    border: 1px solid var(--primary-color);
+    border-radius: 50%;
+    position: fixed;
+    top: -11.5px;
+    left: -11.5px;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.2s ease-out, opacity 0.3s ease;
+}
+
+/* Cursor Hover States */
+body.cursor-hover .custom-cursor {
+    transform: scale(4);
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+}
+
+body.cursor-hover .custom-cursor-outline {
+    transform: scale(1.5);
+    opacity: 0;
+}
+
+/* Grain Aesthetic Overlay */
+.grain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9990;
+    opacity: 0.05;
+    background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+    background-repeat: repeat;
+}
+
+/* Magnetic Utility */
+.magnetic {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Text Reveal Masking */
+.reveal-text-container {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.reveal-text-line {
+    display: inline-block;
+    transform: translateY(110%);
+    will-change: transform;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -330,6 +402,26 @@ section {
     z-index: 10;
     pointer-events: none;
 }
+
+.booking-input {
+    width: 100%;
+    background: rgba(42, 42, 42, 0.4);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 12px;
+    padding: 15px 20px;
+    color: var(--text-light);
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.booking-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(42, 42, 42, 0.6);
+}
+
+.mb-15 { margin-bottom: 15px; }
 
 .service-card:hover::after {
     left: 150%;
