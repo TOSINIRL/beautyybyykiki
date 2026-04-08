@@ -354,6 +354,57 @@
             </div>
         </section>
 
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <div class="container reveal-left">
+                <div class="section-header">
+                    <span class="subtitle">Client Love</span>
+                    <h2>What They <span>Say</span></h2>
+                </div>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"KiKi is so professional and gentle with my edges! The knotless braids lasted over 6 weeks and still looked fresh. Highly recommend!"</p>
+                        <span class="client-name">— Sarah T.</span>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"First time getting a retwist from her and I won't go anywhere else. The studio vibe is amazing and she actually cares about your hair health."</p>
+                        <span class="client-name">— Marcus D.</span>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"Absolutely obsessed with my boho braids! She perfectly matched the curly pieces to my texture. Worth every single penny."</p>
+                        <span class="client-name">— Jessica L.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq-section" style="background-color: var(--bg-card);">
+            <div class="container reveal-right">
+                <div class="section-header">
+                    <span class="subtitle">Questions?</span>
+                    <h2>Frequently Asked <span>Questions</span></h2>
+                </div>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <button class="faq-question">Do you provide the braiding hair? <span class="icon">+</span></button>
+                        <div class="faq-answer"><p>For most styles, hair is NOT included unless specified. Please check your confirmation email for exactly what pre-stretched hair you need to bring!</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">What is your late policy? <span class="icon">+</span></button>
+                        <div class="faq-answer"><p>Please try to arrive on time! If you are running more than 15 minutes late, please text me immediately. Depending on the schedule, we may need to reschedule your appointment and you will forfeit your deposit.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">Does my hair need to be washed before coming? <span class="icon">+</span></button>
+                        <div class="faq-answer"><p>Yes, please arrive with your hair fully washed and free of any heavy product buildup. Blowdrying and detangling are included in your service at no extra cost!</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Booking Section (Advanced Schedule System) -->
         <section id="booking" class="booking">
             <div class="container container-booking">
@@ -482,17 +533,17 @@
                             <a href="#"><i class="fa-brands fa-tiktok"></i></a>
                         </div>
                     </div>
-                    <form class="contact-form">
+                    <form class="contact-form" id="mainContactForm">
                         <div class="form-group">
-                            <input type="text" placeholder="Full Name" required>
+                            <input type="text" id="contactName" placeholder="Full Name" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" placeholder="Email Address" required>
+                            <input type="email" id="contactEmail" placeholder="Email Address" required>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Your Message" rows="5" required></textarea>
+                            <textarea id="contactMessage" placeholder="Your Message" rows="5" required></textarea>
                         </div>
-                        <button type="submit" class="btn primary">Send Message</button>
+                        <button type="submit" id="contactSubmit" class="btn primary">Send Message</button>
                     </form>
                 </div>
             </div>

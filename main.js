@@ -56,14 +56,56 @@ document.addEventListener('DOMContentLoaded', () => {
     revealOnScroll(); // Run once on load
 
     // Form Submission Handling
-    const contactForm = document.querySelector('.contact-form');
+    const contactForm = document.getElementById('mainContactForm');
+    const contactSubmit = document.getElementById('contactSubmit');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            alert('Thank you for your message! KiKi will get back to you soon.');
-            contactForm.reset();
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const msg = document.getElementById('contactMessage').value;
+            
+            if (contactSubmit) contactSubmit.innerText = "Sending...";
+            
+            try {
+                // Using exactly the same EmailJS setup as booking
+                const serviceID = "service_aj78gfg";
+                const stylistTemplateID = "template_ogx7wxe";
+                
+                await emailjs.send(serviceID, stylistTemplateID, {
+                    client_name: name,
+                    client_email: email,
+                    client_phone: "N/A",
+                    service_type: "GENERAL INQUIRY",
+                    appointment_date: "N/A",
+                    appointment_time: "N/A",
+                    add_design: "MESSAGE: " + msg,
+                    to_email: "kikikanu12@gmail.com"
+                });
+                alert('Thank you for your message! KiKi will get back to you soon.');
+                contactForm.reset();
+                if (contactSubmit) contactSubmit.innerText = "Send Message";
+            } catch (err) {
+                console.error(err);
+                alert('Oops! There was an issue sending. Please email kikikanu12@gmail.com directly.');
+                if (contactSubmit) contactSubmit.innerText = "Send Message";
+            }
         });
     }
+
+    // FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const questionBtn = item.querySelector('.faq-question');
+        if(questionBtn) {
+            questionBtn.addEventListener('click', () => {
+                faqItems.forEach(otherItem => {
+                    if(otherItem !== item) otherItem.classList.remove('active');
+                });
+                item.classList.toggle('active');
+            });
+        }
+    });
 
     // Smooth Scroll for Nav Links
     const navLinks = document.querySelectorAll('.nav-links a, .nav-cta a, .hero-actions a');
