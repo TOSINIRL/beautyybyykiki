@@ -137,10 +137,34 @@ header nav {
 }
 
 .logo a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
     font-family: var(--heading-font);
     font-size: 1.8rem;
     font-weight: 900;
     letter-spacing: -1px;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+    filter: brightness(1.05);
+}
+
+.brand-name {
+    font-family: var(--heading-font);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-secondary); /* Elegant brown */
+    letter-spacing: 1px;
+    text-transform: none;
+    position: relative;
+    top: 2px; /* Visual alignment fix */
+}
+
+header.scrolled .brand-name {
+    font-size: 1.4rem;
 }
 
 .nav-links {
