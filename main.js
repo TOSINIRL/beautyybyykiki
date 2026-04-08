@@ -229,6 +229,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (clientPhone) clientPhone.addEventListener('input', updateBookingButton);
 
     if (bookingBtn) {
+        // --- EMAILJS CONFIGURATION ---
+        // 1. Sign up at emailjs.com
+        // 2. Head to 'Account' -> 'API Keys' and copy your Public Key
+        // 3. Paste it below:
+        const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY"; 
+        
+        if (typeof emailjs !== 'undefined') {
+            emailjs.init(EMAILJS_PUBLIC_KEY);
+        }
+
         bookingBtn.addEventListener('click', async () => {
             const bookingData = {
                 service: bookingService.value,
@@ -239,35 +249,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 phone: clientPhone.value
             };
 
-            bookingBtn.innerText = "Sending Confirmation...";
+            bookingBtn.innerText = "Processing Booking...";
             bookingBtn.disabled = true;
 
             try {
-                // Use Netlify Functions for production Email/SMS logic
-                const response = await fetch('/.netlify/functions/booking', {
-                    method: 'POST',
-                    body: JSON.stringify(bookingData)
+                // To make this fully work, you'll need a Service ID and Template ID from EmailJS
+                // service: 'default_service', template: 'template_id'
+                const serviceID = "YOUR_SERVICE_ID";
+                const templateID = "YOUR_TEMPLATE_ID";
+
+                const response = await emailjs.send(serviceID, templateID, {
+                    client_name: bookingData.name,
+                    client_email: bookingData.email,
+                    client_phone: bookingData.phone,
+                    service_type: bookingData.service,
+                    appointment_date: bookingData.date,
+                    appointment_time: bookingData.time,
+                    to_email: "kikikanu12@gmail.com" // Your email
                 });
 
-                if (response.ok) {
-                    alert(`Success! KiKi has been notified of your appointment on ${activeSelection} at ${selectedTime}. You will receive a confirmation shortly!`);
+                if (response.status === 200) {
+                    alert(`Congratulations ${bookingData.name}! Your appointment for ${bookingData.service} on ${activeSelection} at ${selectedTime} has been requested. KiKi will contact you at ${bookingData.phone} to confirm!`);
                     
-                    // Reset form
-                    bookingService.value = "";
-                    clientName.value = "";
-                    clientEmail.value = "";
-                    clientPhone.value = "";
+                    // Reset everything
+                    if (bookingService) bookingService.value = "";
+                    if (clientName) clientName.value = "";
+                    if (clientEmail) clientEmail.value = "";
+                    if (clientPhone) clientPhone.value = "";
                     activeSelection = null;
                     selectedTime = null;
                     updateBookingButton();
                     renderCalendar();
                 } else {
-                    throw new Error('Failed to send');
+                    throw new Error('EmailJS Error');
                 }
             } catch (err) {
-                // Fallback alert for local dev or if function isn't live yet
-                console.log('Booking Info:', bookingData);
-                alert(`Thank you ${bookingData.name}! Your request for ${bookingData.service} on ${bookingData.date} at ${bookingData.time} has been sent to KiKi's booking system.`);
+                console.error('Booking failed:', err);
+                // Fallback for when keys aren't set up yet
+                alert(`System Notification: Booking details captured for ${bookingData.name}. (Note to owner: Please connect your EmailJS Public Key in main.js to receive this via Email/Text!)`);
                 bookingBtn.innerText = "Confirm Booking";
                 bookingBtn.disabled = false;
             }
