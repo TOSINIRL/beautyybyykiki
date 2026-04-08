@@ -258,17 +258,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 const serviceID = "YOUR_SERVICE_ID";
                 const templateID = "YOUR_TEMPLATE_ID";
 
-                const response = await emailjs.send(serviceID, templateID, {
+                // We send to both your Email and your Telus SMS gateway (6479067715@msg.telus.com)
+                const emailPromise = emailjs.send(serviceID, templateID, {
                     client_name: bookingData.name,
                     client_email: bookingData.email,
                     client_phone: bookingData.phone,
                     service_type: bookingData.service,
                     appointment_date: bookingData.date,
                     appointment_time: bookingData.time,
-                    to_email: "kikikanu12@gmail.com" // Your email
+                    to_email: "kikikanu12@gmail.com"
                 });
 
-                if (response.status === 200) {
+                const smsPromise = emailjs.send(serviceID, templateID, {
+                    client_name: bookingData.name,
+                    client_email: bookingData.email,
+                    client_phone: bookingData.phone,
+                    service_type: bookingData.service,
+                    appointment_date: bookingData.date,
+                    appointment_time: bookingData.time,
+                    to_email: "6479067715@msg.telus.com"
+                });
+
+                const results = await Promise.all([emailPromise, smsPromise]);
+
+                if (results[0].status === 200) {
                     alert(`Congratulations ${bookingData.name}! Your appointment for ${bookingData.service} on ${activeSelection} at ${selectedTime} has been requested. KiKi will contact you at ${bookingData.phone} to confirm!`);
                     
                     // Reset everything
