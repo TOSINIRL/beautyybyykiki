@@ -293,7 +293,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const results = await Promise.all([emailPromise, smsPromise, clientPromise]);
 
                 if (results[0].status === 200) {
-                    alert(`Congratulations ${bookingData.name}! Your appointment for ${bookingData.service} on ${activeSelection} at ${selectedTime} has been requested. KiKi will contact you at ${bookingData.phone} to confirm!`);
+                    const successModal = document.getElementById('successModal');
+                    const modalMessage = document.getElementById('modalMessage');
+                    const closeModal = document.getElementById('closeModal');
+                    
+                    if (successModal && modalMessage) {
+                        modalMessage.innerHTML = `Congratulations <strong>${bookingData.name}</strong>!<br><br>Your <strong>${bookingData.service}</strong> session is requested for:<br><span>${activeSelection} at ${selectedTime}</span><br><br>KiKi will contact you at ${bookingData.phone} to confirm!`;
+                        successModal.classList.add('active');
+                        
+                        closeModal.addEventListener('click', () => {
+                            successModal.classList.remove('active');
+                        });
+                    }
                     
                     // Reset everything
                     if (bookingService) bookingService.value = "";
