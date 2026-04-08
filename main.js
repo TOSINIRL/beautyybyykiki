@@ -554,12 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.add('time-btn');
             
             if (bookedTimes[safeTime]) {
-                btn.innerText = "Taken";
-                btn.disabled = true;
-                btn.style.opacity = "0.3";
-                btn.style.cursor = "not-allowed";
-                btn.style.textDecoration = "line-through";
-                btn.classList.add('disabled-time');
+                btn.style.display = "none"; // Makes the booked time slot completely disappear
             } else {
                 btn.innerText = t;
                 btn.onclick = () => {
