@@ -307,6 +307,13 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <p>⏰ <strong>Time:</strong> ${bookingData.time}</p>
                                 <p>📍 <strong>Location:</strong> Address will be sent after deposit</p>
                                 <hr>
+                                <p><strong>Please arrive with:</strong></p>
+                                <ul>
+                                    <li>Hair washed</li>
+                                    <li>Free of buildup</li>
+                                </ul>
+                                <p>Blowdrying/Detangling is <strong>included</strong>! 🫶🏾</p>
+                                <hr>
                                 <p>💳 <strong>Deposit Policy:</strong><br>
                                 Your appointment is only secured once your <strong>$15 deposit</strong> is sent.<br>
                                 Deposits are non-refundable and go toward your final total.</p>
@@ -315,6 +322,9 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <p>⏰ <strong>Please Note:</strong><br>
                                 • Please try arrive on time. If running late, please send a text! 🫶🏾<br>
                                 • No extra guests unless approved</p>
+                                <hr>
+                                <p style="font-style: italic; text-align: center;">If you have any questions, feel free to message me 💌</p>
+                                <p style="text-align: center; font-size: 1.1rem;">Thank you for booking with me 🤎<br><strong>BeautyybyyKiKi</strong></p>
                             </div>
                         `;
                         successModal.classList.add('active');
