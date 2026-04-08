@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevMonthBtn = document.getElementById('prevMonth');
     const nextMonthBtn = document.getElementById('nextMonth');
 
-    let currentDate = new Date(2025, 11, 1); // December 2025 as default
+    let currentDate = new Date(); // Start with current date
     let activeSelection = null;
     let selectedStyle = null;
     let selectedTime = null;
@@ -246,7 +246,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 time: selectedTime,
                 name: clientName.value,
                 email: clientEmail.value,
-                phone: clientPhone.value
+                phone: clientPhone.value,
+                addDesign: document.getElementById('addDesign').checked ? "Yes (+$5)" : "No"
             };
 
             bookingBtn.innerText = "Processing Booking...";
@@ -265,6 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     service_type: bookingData.service,
                     appointment_date: bookingData.date,
                     appointment_time: bookingData.time,
+                    add_design: bookingData.addDesign,
                     to_email: "kikikanu12@gmail.com"
                 });
 
@@ -281,12 +283,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // 3. Send Confirmation Email to the CLIENT
                 const clientPromise = emailjs.send(serviceID, clientTemplateID, {
-                    client_name: bookingData.name,
-                    client_email: bookingData.email,
-                    client_phone: bookingData.phone,
-                    service_type: bookingData.service,
-                    appointment_date: bookingData.date,
-                    appointment_time: bookingData.time,
+                    name: bookingData.name,
+                    email: bookingData.email,
+                    service: bookingData.service,
+                    date: bookingData.date,
+                    time: bookingData.time,
+                    add_design: bookingData.addDesign,
                     to_email: bookingData.email
                 });
 
@@ -305,6 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <p>📍 <strong>Service:</strong> ${bookingData.service}</p>
                                 <p>📅 <strong>Date:</strong> ${bookingData.date}</p>
                                 <p>⏰ <strong>Time:</strong> ${bookingData.time}</p>
+                                <p>🎨 <strong>Add Design:</strong> ${bookingData.addDesign}</p>
                                 <p>📍 <strong>Location:</strong> Address will be sent after deposit</p>
                                 <hr>
                                 <p><strong>Please arrive with:</strong></p>
@@ -314,9 +317,9 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </ul>
                                 <p>Blowdrying/Detangling is <strong>included</strong>! 🫶🏾</p>
                                 <hr>
-                                <p>💳 <strong>Deposit Policy:</strong><br>
-                                Your appointment is only secured once your <strong>$15 deposit</strong> is sent.<br>
-                                Deposits are non-refundable and go toward your final total.</p>
+                                <p>💳 <strong>Deposit & Payment:</strong><br>
+                                Your appointment is only secured once your <strong>$15 deposit</strong> is sent. The remaining balance can be paid in <strong>Cash or E-transfer</strong> at your appointment.<br>
+                                Deposits are non-refundable. Please provide 24h notice for rescheduling.</p>
                                 <p><strong>Email for deposit:</strong> <a href="mailto:kikikanu12@gmail.com">kikikanu12@gmail.com</a></p>
                                 <hr>
                                 <p>⏰ <strong>Please Note:</strong><br>
@@ -328,6 +331,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         `;
                         successModal.classList.add('active');
+                        
+                        // Clear checkbox
+                        const designCheckbox = document.getElementById('addDesign');
+                        if (designCheckbox) designCheckbox.checked = false;
                         
                         closeModal.addEventListener('click', () => {
                             successModal.classList.remove('active');
@@ -385,8 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Highlighting specific days from the screenshot for demo
-            if (currentDate.getMonth() === 11 && d === 3) dayEl.classList.add('day-active-selected');
-            if (currentDate.getMonth() === 11 && d === 27) dayEl.classList.add('day-selected-secondary');
+
 
             dayEl.addEventListener('click', () => {
                 if (dayEl.classList.contains('day-unavailable')) return;
@@ -408,7 +414,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderTimeSlots = () => {
-        const times = ["10:00 AM", "11:30 AM", "1:30 PM", "3:00 PM", "4:30 PM"];
+        const times = [
+            "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", 
+            "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", 
+            "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM"
+        ];
         timeGrid.innerHTML = "";
         times.forEach(t => {
             const btn = document.createElement('button');
@@ -426,7 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (prevMonthBtn && nextMonthBtn) {
         prevMonthBtn.onclick = () => {
-            currentDate.setMonth(currentDate.setMonth() - 1);
+            currentDate.setMonth(currentDate.getMonth() - 1);
             renderCalendar();
         };
 
