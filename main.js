@@ -298,7 +298,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     const closeModal = document.getElementById('closeModal');
                     
                     if (successModal && modalMessage) {
-                        modalMessage.innerHTML = `Congratulations <strong>${bookingData.name}</strong>!<br><br>Your <strong>${bookingData.service}</strong> session is requested for:<br><span>${activeSelection} at ${selectedTime}</span><br><br>KiKi will contact you at ${bookingData.phone} to confirm!`;
+                        modalMessage.innerHTML = `
+                            <div class="modal-details-list">
+                                <p>Hi there 🤎, thank you for booking with BeautyybyyKiKi! 🤎</p>
+                                <hr>
+                                <p>📍 <strong>Service:</strong> ${bookingData.service}</p>
+                                <p>📅 <strong>Date:</strong> ${bookingData.date}</p>
+                                <p>⏰ <strong>Time:</strong> ${bookingData.time}</p>
+                                <p>📍 <strong>Location:</strong> Address will be sent after deposit</p>
+                                <hr>
+                                <p>💳 <strong>Deposit Policy:</strong><br>
+                                Your appointment is only secured once your <strong>$15 deposit</strong> is sent.<br>
+                                Deposits are non-refundable and go toward your final total.</p>
+                                <p><strong>Email for deposit:</strong> <a href="mailto:kikikanu12@gmail.com">kikikanu12@gmail.com</a></p>
+                                <hr>
+                                <p>⏰ <strong>Please Note:</strong><br>
+                                • Please try arrive on time. If running late, please send a text! 🫶🏾<br>
+                                • No extra guests unless approved</p>
+                            </div>
+                        `;
                         successModal.classList.add('active');
                         
                         closeModal.addEventListener('click', () => {

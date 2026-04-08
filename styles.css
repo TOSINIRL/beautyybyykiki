@@ -1454,3 +1454,123 @@ footer {
         grid-template-columns: 1fr !important;
     }
 }
+
+/* --- Success Modal Styling --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: var(--bg-card);
+    border: 1px solid var(--primary-color);
+    border-radius: 24px;
+    padding: 50px 40px;
+    max-width: 550px;
+    width: 95%;
+    text-align: center;
+    transform: scale(0.9) translateY(20px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.modal-icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.modal-title {
+    font-family: var(--heading-font);
+    font-size: 2.5rem;
+    color: var(--text-main);
+    margin-bottom: 25px;
+}
+
+.modal-details-list {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid rgba(197, 160, 89, 0.1);
+    margin-bottom: 30px;
+}
+
+.modal-details-list p {
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+}
+
+.modal-details-list hr {
+    border: none;
+    border-top: 1px solid rgba(197, 160, 89, 0.2);
+    margin: 15px 0;
+}
+
+.modal-details-list strong {
+    color: var(--text-main);
+    font-weight: 700;
+}
+
+.modal-details-list a {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.btn-primary {
+    background: var(--text-main);
+    color: #FFF;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-family: var(--ui-font);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.btn-primary:hover {
+    background: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 40px 15px;
+        width: 95%;
+    }
+    .modal-title {
+        font-size: 1.8rem;
+    }
+    .modal-details-list {
+        padding: 15px;
+    }
+}
