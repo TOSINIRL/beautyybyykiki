@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 1. Sign up at emailjs.com
         // 2. Head to 'Account' -> 'API Keys' and copy your Public Key
         // 3. Paste it below:
-        const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY"; 
+        const EMAILJS_PUBLIC_KEY = "UlOSlGfDmCQAsy0Aj"; 
         
         if (typeof emailjs !== 'undefined') {
             emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -253,13 +253,12 @@ document.addEventListener('DOMContentLoaded', () => {
             bookingBtn.disabled = true;
 
             try {
-                // To make this fully work, you'll need a Service ID and Template ID from EmailJS
-                // service: 'default_service', template: 'template_id'
-                const serviceID = "YOUR_SERVICE_ID";
-                const templateID = "YOUR_TEMPLATE_ID";
+                const serviceID = "service_g351uza";
+                const stylistTemplateID = "template_ieii16g";
+                const clientTemplateID = "template_7t6ikwf";
 
-                // We send to both your Email and your Telus SMS gateway (6479067715@msg.telus.com)
-                const emailPromise = emailjs.send(serviceID, templateID, {
+                // 1. Send Alert Email to Stylist
+                const emailPromise = emailjs.send(serviceID, stylistTemplateID, {
                     client_name: bookingData.name,
                     client_email: bookingData.email,
                     client_phone: bookingData.phone,
@@ -270,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 // 2. Send SMS alert to Stylist (Telus)
-                const smsPromise = emailjs.send(serviceID, templateID, {
+                const smsPromise = emailjs.send(serviceID, stylistTemplateID, {
                     client_name: bookingData.name,
                     client_email: bookingData.email,
                     client_phone: bookingData.phone,
@@ -281,14 +280,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 // 3. Send Confirmation Email to the CLIENT
-                const clientPromise = emailjs.send(serviceID, templateID, {
+                const clientPromise = emailjs.send(serviceID, clientTemplateID, {
                     client_name: bookingData.name,
                     client_email: bookingData.email,
                     client_phone: bookingData.phone,
                     service_type: bookingData.service,
                     appointment_date: bookingData.date,
                     appointment_time: bookingData.time,
-                    to_email: bookingData.email // Send to the customer!
+                    to_email: bookingData.email
                 });
 
                 const results = await Promise.all([emailPromise, smsPromise, clientPromise]);
