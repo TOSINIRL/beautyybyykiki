@@ -14,6 +14,9 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -318,6 +321,108 @@
             </div>
         </section>
 
+        <!-- FAQ Section -->
+        <section id="faq" class="faq-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="subtitle">Questions</span>
+                    <h2>Frequently Asked <span>Questions</span></h2>
+                    <p>Everything you need to know before your appointment.</p>
+                </div>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How should I prep my hair?</h3>
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Please arrive with your hair completely detangled, washed, and blow-dried straight with no products added unless you booked the wash and blow-dry add-on.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What is the late policy?</h3>
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>A 15-minute grace period is given. After 15 minutes, a $15 late fee will be applied. After 30 minutes, your appointment will be canceled and your deposit forfeited.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Is hair included in the price?</h3>
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Hair is not included in the base price unless otherwise stated. Please check the specific style details or contact me beforehand.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can I change my style the day of?</h3>
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Style changes must be communicated at least 48 hours in advance to ensure enough time is allocated. Same-day changes are generally not permitted.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Client Reviews System -->
+        <section id="reviews" class="reviews-section dark-glossy-section">
+            <div class="container reviews-container">
+                <div class="section-header">
+                    <span class="subtitle">Testimonials</span>
+                    <h2>Leave A <span>Review</span></h2>
+                </div>
+                <div class="review-form-wrapper glossy-card">
+                    <form id="reviewForm" class="review-form">
+                        <div class="form-group">
+                            <input type="text" id="reviewName" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="reviewRating" required>
+                                <option value="" disabled selected>Select a Rating</option>
+                                <option value="5">⭐⭐⭐⭐⭐ - 5 Stars</option>
+                                <option value="4">⭐⭐⭐⭐ - 4 Stars</option>
+                                <option value="3">⭐⭐⭐ - 3 Stars</option>
+                                <option value="2">⭐⭐ - 2 Stars</option>
+                                <option value="1">⭐ - 1 Star</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="reviewMessage" placeholder="Tell us about your experience..." rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn primary-gold">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Luxury Success Modal -->
+        <div id="bookingSuccessModal" class="modal-overlay">
+            <div class="modal-content glossy-card">
+                <div class="modal-header">
+                    <h2 class="cursive-title">Booking Complete</h2>
+                    <button id="closeModalBtn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body">
+                    <i class="fa-solid fa-circle-check success-icon"></i>
+                    <p class="modal-desc">Thank you for choosing BeautyybyyKiKi!</p>
+                    <div class="modal-details">
+                        <p><strong>Date:</strong> <span id="modalDate"></span></p>
+                        <p><strong>Time:</strong> <span id="modalTime"></span></p>
+                    </div>
+                    <p class="modal-desc" style="margin-top: 15px;">A confirmation email has been sent to your inbox. As a reminder, a <strong>$15 non-refundable deposit</strong> is required via DM to secure your spot.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="https://instagram.com" target="_blank" class="btn primary-gold">DM to Pay Deposit</a>
+                </div>
+            </div>
+        </div>
+
         <!-- Contact Section -->
 
         <section id="contact" class="contact">
@@ -346,17 +451,17 @@
                             <a href="#"><i class="fa-brands fa-tiktok"></i></a>
                         </div>
                     </div>
-                    <form class="contact-form">
+                    <form id="contactForm" class="contact-form">
                         <div class="form-group">
-                            <input type="text" placeholder="Full Name" required>
+                            <input type="text" id="contactName" placeholder="Full Name" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" placeholder="Email Address" required>
+                            <input type="email" id="contactEmail" placeholder="Email Address" required>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Your Message" rows="5" required></textarea>
+                            <textarea id="contactMessage" placeholder="Your Message" rows="5" required></textarea>
                         </div>
-                        <button type="submit" class="btn primary">Send Message</button>
+                        <button type="submit" class="btn primary" id="contactSubmitBtn">Send Message</button>
                     </form>
                 </div>
             </div>

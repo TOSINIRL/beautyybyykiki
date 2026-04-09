@@ -1229,5 +1229,222 @@ footer {
         flex-direction: column;
         gap: 20px;
         text-align: center;
-    }
+}
+
+/* --- FAQ Section --- */
+.faq-grid {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.faq-item {
+    background-color: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+
+.faq-question {
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.faq-question h3 {
+    font-family: var(--ui-font);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.faq-question i {
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0 25px;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.faq-item.active .faq-answer {
+    max-height: 200px;
+    padding: 0 25px 20px;
+}
+
+.faq-answer p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* --- Reviews Section --- */
+.reviews-section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.reviews-container {
+    max-width: 800px;
+}
+
+.review-form-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.review-form .form-group select {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: var(--body-font);
+    appearance: none;
+    cursor: pointer;
+}
+
+.review-form .form-group select option {
+    background-color: #0A0A0A;
+    color: #FFF;
+}
+
+.review-form .form-group input,
+.review-form .form-group textarea {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: var(--body-font);
+}
+
+.review-form .form-group input:focus,
+.review-form .form-group textarea:focus,
+.review-form .form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* --- Modal Styling --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 500px;
+    transform: translateY(30px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    text-align: center;
+    padding: 40px;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.modal-header {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.modal-header .cursive-title {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.close-btn {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
+}
+
+.success-icon {
+    font-size: 4rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.modal-desc {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.modal-details {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.modal-details p {
+    color: #FFF;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.modal-details span {
+    font-family: var(--ui-font);
+    font-weight: 600;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
 }
