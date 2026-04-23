@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation - BeautyybyyKiKi</title>
+    <style>
+        /* Email resets */
+        body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
+        table { border-collapse: collapse !important; }
+        body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #F5EBE0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        /* Luxury Styling */
+        .email-wrapper {
+            background-color: #FAF6F2;
+            max-width: 600px;
+            margin: 20px auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+            border: 1px solid rgba(197, 160, 89, 0.15);
+        }
+        .header {
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .logo {
+            max-width: 160px;
+            height: auto;
+        }
+        .content {
+            padding: 0 40px 40px;
+            color: #4A3B2F;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        .greeting {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0A0A0A;
+            margin-bottom: 5px;
+        }
+        .main-msg {
+            margin-bottom: 25px;
+        }
+        .details-box {
+            background-color: #FFFFFF;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        .section-title {
+            color: #C5A059;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 12px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .policy-box {
+            border-top: 1px solid rgba(197, 160, 89, 0.15);
+            padding-top: 20px;
+            margin-top: 25px;
+        }
+        .signature-area {
+            text-align: center;
+            padding: 40px;
+            background-color: #FAF6F2;
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        .signature-text {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 32px;
+            color: #C5A059;
+            margin-bottom: 5px;
+        }
+        .brand-name {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 12px;
+            color: #0A0A0A;
+        }
+        .social-link {
+            color: #C5A059;
+            text-decoration: none;
+            font-size: 13px;
+            margin: 0 10px;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 600px) {
+            .content { padding: 0 25px 35px; }
+            .details-box { padding: 20px; }
+        }
+    </style>
+</head>
+<body style="background-color: #F5EBE0;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td align="center" style="padding: 20px 0;">
+                <div class="email-wrapper">
+                    <div class="header">
+                        <img src="https://beautyybyykiki.netlify.app/assets/beautyybyykiki_luxe_logo.png" alt="BeautyybyyKiKi Logo" class="logo">
+                    </div>
+
+                    <div class="content">
+                        <p class="greeting">Hi {{name}} 🤎,</p>
+                        <p class="main-msg">Thank you for booking with <strong>BeautyybyyKiKi</strong>! 🤎</p>
+                        
+                        <p style="margin-bottom: 10px; font-weight: 600;">Here are your appointment details:</p>
+                        
+                        <div class="details-box">
+                            <p style="margin: 8px 0;">📍 <strong>Service:</strong> {{service}}</p>
+                            <p style="margin: 8px 0;">📅 <strong>Date:</strong> {{date}}</p>
+                            <p style="margin: 8px 0;">⏰ <strong>Time:</strong> {{time}}</p>
+                            <p style="margin: 8px 0;">📍 <strong>Location:</strong> Address will be sent after deposit</p>
+                        </div>
+
+                        <div class="policy-box">
+                            <p style="font-weight: 700; color: #0A0A0A; margin-bottom: 10px;">💳 Deposit & Payment:</p>
+                            <p style="margin-bottom: 5px;">Your appointment is only secured once your <strong>$15 deposit</strong> is sent. The remaining balance can be paid in <strong>Cash or E-transfer</strong> at your appointment.</p>
+                            <p style="margin-bottom: 15px; font-size: 14px; color: #4A3B2F;"><em>*Squeeze-in (Same day) appointments are <strong>$20 extra</strong>.</em></p>
+                            <p style="background: rgba(197, 160, 89, 0.1); padding: 10px 15px; border-radius: 8px; display: inline-block; margin-bottom: 15px;">
+                                <strong>Email for deposit:</strong> <a href="mailto:kikikanu12@gmail.com" style="color: #4A3B2F; text-decoration: none;">kikikanu12@gmail.com</a>
+                            </p>
+                            <p style="font-size: 14px; color: #8E8D8A; font-style: italic;">Note: Deposits are non-refundable. Please provide at least 24 hours notice for rescheduling.</p>
+                        </div>
+
+                        <div style="margin-top: 30px; border-left: 3px solid #C5A059; padding-left: 20px;">
+                            <p style="font-weight: 700; color: #0A0A0A; margin-bottom: 10px;">⏰ Please Note:</p>
+                            <p style="margin-bottom: 8px;">&bull; Please try arrive on time. However, if you are running late please send me a text to let me know 🫶🏾</p>
+                            <p style="margin-bottom: 8px;">&bull; No extra guests unless approved</p>
+                            <p style="margin-top: 15px; font-style: italic;">If you have any questions, feel free to reply to this email or message me 💌</p>
+                        </div>
+                    </div>
+
+                    <div class="signature-area">
+                        <div class="signature-text">Thank you for booking with me 🤎</div>
+                        <div class="brand-name">BeautyybyyKiKi</div>
+                        <div style="margin-top: 30px;">
+                            <a href="https://www.instagram.com/beautyybyykiki/" class="social-link">Instagram</a>
+                            <a href="https://snapchat.com/t/gYFWogtz" class="social-link">Snapchat</a>
+                        </div>
+                        <p style="font-size: 11px; margin-top: 25px; opacity: 0.6; color: #8E8D8A;">
+                            Vaughan, Ontario &bull; (647) 906-7715<br>
+                            &copy; 2026 BeautyybyyKiKi. All rights reserved.
+                        </p>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

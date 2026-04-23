@@ -14,30 +14,29 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- EmailJS -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
-    <!-- Firebase (Compat version) -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
+    <div class="grain-overlay"></div>
+
     <header id="header">
         <nav class="container">
             <div class="logo">
-                <a href="#">Beautyybyy<span>KiKi</span></a>
+                <a href="#"><img src="assets/beautyybyykiki_luxe_logo.png" alt="BeautyybyyKiKi Luxury Hair Artistry" class="luxe-logo"></a>
             </div>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home" class="magnetic">Home</a></li>
+                <li><a href="#services" class="magnetic">Services</a></li>
+                <li><a href="#about" class="magnetic">About</a></li>
+                <li><a href="#pricing" class="magnetic">Pricing</a></li>
+                <li><a href="#contact" class="magnetic">Contact</a></li>
             </ul>
             <div class="nav-cta">
-                <a href="#booking" class="btn primary">Book Now</a>
+                <a href="#booking" class="btn primary magnetic">Book Now</a>
             </div>
             <div class="mobile-menu-btn">
                 <i class="fa-solid fa-bars"></i>
@@ -50,9 +49,16 @@
         <section id="home" class="hero">
             <canvas id="hero-canvas"></canvas>
             <div class="hero-overlay"></div>
-            <div class="container hero-content">
-                <h1 class="fade-up">Luxury Styling <br>For The <span>Modern Woman</span></h1>
-                <p class="fade-up-delay">Elevate your crown with BeautyybyyKiKi. Expertly crafted braids, flawless sew-ins, and stunning custom wigs designed to make you shine.</p>
+            <div class="hero-content reveal">
+                <span class="subtitle">Welcome to BeautyybyyKiKi</span>
+                <h1>
+                    <span class="reveal-text-container"><span class="reveal-text-line">Precision</span></span>
+                    <span class="reveal-text-container"><span class="reveal-text-line">Styling</span></span>
+                    <span class="reveal-text-container"><span class="reveal-text-line">For</span></span>
+                    <span class="reveal-text-container"><span class="reveal-text-line">The</span></span>
+                    <span class="reveal-text-container"><span class="reveal-text-line"><span>Modern Crown</span></span></span>
+                </h1>
+                <p>Specializing in precision braids & loc care. Precision braids, custom twists, and expert loc care designed to elevate your crown.</p>
                 <div class="hero-actions fade-up-delay-2">
                     <a href="#booking" class="btn primary lg">Book Appointment</a>
                     <a href="#services" class="btn secondary lg">View Services</a>
@@ -70,67 +76,126 @@
                 </div>
                 
                 <div class="services-grid">
-                    <div class="service-card reveal">
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="assets/stitch-braids.jpg" alt="Stitch Braids">
+                        </div>
                         <div class="service-info">
                             <h3>Stitch Braids</h3>
-                            <p>Precision-parted stitch braids for a clean and lasting protective style.</p>
+                            <p>Premium stitch technique featuring razor-sharp precision parts for a sleek, high-end finish.</p>
                             <span class="price">From $60</span>
                         </div>
                     </div>
 
-                    <div class="service-card reveal">
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="assets/popsmoke-braids.jpg" alt="Pop Smoke Braids (Men's)">
+                        </div>
+                        <div class="service-info">
+                            <h3>Pop Smoke Braids</h3>
+                            <p>Clean, medium-thick braids with precise parting for a sharp, modern look.</p>
+                            <span class="price">From $50</span>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="assets/loc-retwist-new.jpg" alt="Loc Retwist">
+                        </div>
                         <div class="service-info">
                             <h3>Loc Retwist</h3>
-                            <p>Clean and precise loc retwisting to keep your locs looking fresh and well-maintained.</p>
+                            <p>Professional maintenance to keep your locs neat, healthy, and perfectly formed.</p>
                             <span class="price">From $70</span>
                         </div>
                     </div>
 
-                    <div class="service-card reveal">
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="assets/loc-styling-new.jpg" alt="Loc Retwist + Styling">
+                        </div>
                         <div class="service-info">
                             <h3>Loc Retwist + Styling</h3>
-                            <p>Loc retwisting elevated with creative styling — perfect for those who want more than maintenance.</p>
+                            <p>Expert loc maintenance combined with custom styling to showcase your unique personality.</p>
                             <span class="price">From $90</span>
                         </div>
                     </div>
 
-                    <div class="service-card reveal">
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="assets/twists-new.jpg" alt="Two Strand Twist">
+                        </div>
                         <div class="service-info">
                             <h3>Two Strand Twist</h3>
-                            <p>Expertly crafted two strand twists combining style with optimal hair protection.</p>
+                            <p>Precision-parted two strand twists providing a clean, protective, and fresh style.</p>
                             <span class="price">From $65</span>
                         </div>
                     </div>
 
-                    <div class="service-card reveal">
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="assets/single-braids-new.jpg" alt="Single Braids (Plaits)">
+                        </div>
                         <div class="service-info">
                             <h3>Single Braids (Plaits)</h3>
-                            <p>Neat, individual single braids (plaits) offering a timeless and protective finish.</p>
+                            <p>Classic individual braids designed for versatility, comfort, and a long-lasting look.</p>
                             <span class="price">From $65</span>
                         </div>
                     </div>
 
-                    <div class="service-card reveal">
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="assets/boho-knotless-new.jpg" alt="Boho Knotless Braids">
+                        </div>
                         <div class="service-info">
                             <h3>Boho Knotless Braids</h3>
-                            <p>Gorgeous boho-style knotless braids with flowing, curly ends for a free-spirited look.</p>
-                            <span class="price">From $185</span>
+                            <p>Effortless and ethereal braids with curly hair woven throughout for a soft, bohemian vibe.</p>
+                            <span class="price">From $150</span>
                         </div>
                     </div>
 
-                    <div class="service-card reveal">
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="assets/knotless-new.jpg" alt="Knotless Braids">
+                        </div>
                         <div class="service-info">
                             <h3>Knotless Braids</h3>
-                            <p>Painless, tension-free knotless braids for a seamless and natural look.</p>
+                            <p>Seamless and tension-free technique providing a more natural and scalp-friendly finish.</p>
                             <span class="price">From $110</span>
                         </div>
                     </div>
 
-                    <div class="service-card reveal">
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="assets/smedium-knotless.jpg" alt="Smedium Knotless Braids">
+                        </div>
+                        <div class="service-info">
+                            <h3>Smedium Knotless Braids</h3>
+                            <p>The perfect mid-size between small and medium for a versatile, long-lasting look.</p>
+                            <span class="price">From $140</span>
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="assets/design-1.jpg" alt="Girls' Designs">
+                        </div>
+                        <div class="service-info">
+                            <h3>Designs are $5 extra</h3>
+                            <p>Beautiful heart, star, and creative patterns added to any style.</p>
+                            <span class="price">+$5</span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="assets/regular-twists-new.jpg" alt="Regular Twists">
+                        </div>
                         <div class="service-info">
                             <h3>Regular Twists</h3>
-                            <p>Springy, defined twists with clean parting for a fresh and protective everyday look.</p>
-                            <span class="price">From $65</span>
+                            <p>Clean and traditional twisting method for a neat, manageable, and stylish hair journey.</p>
+                            <span class="price">From $60</span>
                         </div>
                     </div>
                 </div>
@@ -169,13 +234,22 @@
                 <div class="about-content reveal-right">
                     <span class="subtitle">Meet The Stylist</span>
                     <h2>KiKi: The Visionary <span>Behind The Chair</span></h2>
-                    <p>With over 8 years of experience in black hair care and styling, I focus on transformation that respects the health of your natural hair. My passion is to bring out the inner confidence of every woman who sits in my chair.</p>
+                    <p>With over 5 years of experience in black hair care and styling, I focus on transformation that respects the health of your natural hair. My passion is to bring out the inner confidence of anyone who sits in my chair.</p>
                     <p>BeautyybyyKiKi isn't just about hair—it's about an experience of luxury, care, and excellence.</p>
                     <ul class="about-features">
                         <li><i class="fa-solid fa-check"></i> Certified Master Stylist</li>
                         <li><i class="fa-solid fa-check"></i> Healthy Hair Specialist</li>
                         <li><i class="fa-solid fa-check"></i> Custom Unit Designer</li>
                     </ul>
+                    <div class="stylist-signature">
+                        <div class="signature-img">
+                            <img src="assets/kiki-profile.png" alt="KiKi Profile">
+                        </div>
+                        <div class="signature-text">
+                            <p class="name">KiKi</p>
+                            <p class="role">Lead Stylist & Founder</p>
+                        </div>
+                    </div>
                     <a href="#contact" class="btn primary">Learn More</a>
                 </div>
             </div>
@@ -190,7 +264,12 @@
                     <h2 class="cursive-title">Price List</h2>
                     
                     <div class="price-category">
-                        <h3>Women's prices</h3>
+                        <div class="category-header">
+                            <div class="category-img">
+                                <img src="assets/women-category.jpg" alt="Women's Services">
+                            </div>
+                            <h3>Women's prices</h3>
+                        </div>
                         <ul class="price-list">
                             <li><span>Small knotless braids</span> <span>$180</span></li>
                             <li><span>Smedium knotless braids</span> <span>$140</span></li>
@@ -205,11 +284,17 @@
                             <li><span>Small box braids</span> <span>$115</span></li>
                             <li><span>Medium box braids</span> <span>$100</span></li>
                             <li><span>Large box braids</span> <span>$90</span></li>
+                            <li><span>Designs are $5 extra</span> <span>+$5</span></li>
                         </ul>
                     </div>
 
                     <div class="price-category">
-                        <h3>Men's prices</h3>
+                        <div class="category-header">
+                            <div class="category-img">
+                                <img src="assets/stitch-braids.jpg" alt="Men's Services">
+                            </div>
+                            <h3>Men's prices</h3>
+                        </div>
                         <ul class="price-list">
                             <li><span>Single braids (plaits)</span> <span>$65</span></li>
                             <li><span>Cornrows</span> <span>$55</span></li>
@@ -217,11 +302,17 @@
                             <li><span>Pop Smoke braids</span> <span>$50</span></li>
                             <li><span>Twists</span> <span>$60</span></li>
                             <li><span>Two strand Twist</span> <span>$65</span></li>
+                            <li><span>Designs are $5 extra</span> <span>+$5</span></li>
                         </ul>
                     </div>
 
                     <div class="price-category">
-                        <h3>Loc styles</h3>
+                        <div class="category-header">
+                            <div class="category-img">
+                                <img src="assets/retwist.jpg" alt="Loc Styles">
+                            </div>
+                            <h3>Loc styles</h3>
+                        </div>
                         <ul class="price-list">
                             <li><span>Loc retwist</span> <span>$70</span></li>
                             <li><span>Starter locs</span> <span>$100</span></li>
@@ -237,17 +328,91 @@
                     </div>
                     
                     <div class="policy-content">
-                        <p class="highlight-text">Book through dm's !</p>
+                        <p class="highlight-text">Professional Hair Artistry</p>
                         
-                        <p>A <strong>$15 non-refundable deposit</strong> will be required to book your spot. You will pay the remaining amount in <strong>cash</strong>.</p>
+                        <p>A <strong>$15 non-refundable deposit</strong> will be required to book your spot. You will pay the remaining amount in <strong>cash or e-transfer</strong>.</p>
                         
                         <br>
                         <p>Squeeze in (Same day)<br> appointments are <strong>$20 extra</strong>.</p>
+
+                        <div class="policy-prep" style="margin-top: 25px; border-top: 1px solid rgba(197, 160, 89, 0.2); padding-top: 25px;">
+                            <p style="margin-bottom: 10px;"><strong>Please arrive with:</strong></p>
+                            <ul style="list-style: disc; padding-left: 20px; margin-bottom: 15px; text-align: left; display: inline-block;">
+                                <li>Hair washed</li>
+                                <li>Free of heavy product buildup</li>
+                            </ul>
+                            <p>Blowdrying and detangling are included in service at <strong>no extra cost</strong> 🫶🏾</p>
+                        </div>
+
+                        <div class="policy-footer-note" style="margin-top: 25px; font-style: italic;">
+                            <p>If you have any questions, feel free to message me 💌</p>
+                            <p style="margin-top: 15px; font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: var(--primary-color);">Thank you for booking with me 🤎</p>
+                            <p style="text-transform: uppercase; letter-spacing: 2px; font-weight: 700; font-size: 0.85rem;">BeautyybyyKiKi</p>
+                        </div>
                     </div>
-                    
-                    <a href="https://instagram.com" target="_blank" class="btn primary-gold" style="margin-top: 40px;">DM to Book</a>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <div class="container reveal-left">
+                <div class="section-header">
+                    <span class="subtitle">Client Love</span>
+                    <h2>What They <span>Say</span></h2>
+                </div>
+                <div class="testimonial-grid" id="liveReviewsContainer">
+                    <!-- Future real reviews will be manually added here by developer when forwarded by KiKi -->
+                </div>
+
+                <div class="review-submission-wrapper" style="max-width: 600px; margin: 40px auto 0;">
+                    <div class="testimonial-card" style="border-width: 2px;">
+                        <h3 style="text-align: center; margin-bottom: 15px; font-family: var(--heading-font);">Leave a Review</h3>
+                        <p style="text-align: center; margin-bottom: 25px; font-size: 0.95rem; color: var(--text-secondary);">Loved your hair? Let us know about your experience!</p>
+                        
+                        <form id="reviewForm" class="contact-form" style="margin-top: 0;">
+                            <div class="form-group" style="margin-bottom: 15px;">
+                                <input type="text" id="reviewName" placeholder="Your First Name & Last Initial (e.g. Tosin A.)" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 15px;">
+                                <select id="reviewRating" class="booking-select" required style="width:100%; border:1px solid rgba(212, 175, 55, 0.2); background:rgba(42, 42, 42, 0.05); color:var(--text-main); font-family:'Inter', sans-serif; padding:15px 20px; border-radius:12px;">
+                                    <option value="5 Stars">★★★★★ 5 Stars</option>
+                                    <option value="4 Stars">★★★★☆ 4 Stars</option>
+                                    <option value="3 Stars">★★★☆☆ 3 Stars</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 15px;">
+                                <textarea id="reviewText" placeholder="Tell us about your experience..." rows="4" required></textarea>
+                            </div>
+                            <button type="submit" id="reviewSubmit" class="btn primary" style="width: 100%;">Submit Review to KiKi</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq-section" style="background-color: var(--bg-card);">
+            <div class="container reveal-right">
+                <div class="section-header">
+                    <span class="subtitle">Questions?</span>
+                    <h2>Frequently Asked <span>Questions</span></h2>
+                </div>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <button class="faq-question">Do you provide the braiding hair? <span class="icon">+</span></button>
+                        <div class="faq-answer"><p>For most styles, hair is NOT included unless specified. Please check your confirmation email for exactly what pre-stretched hair you need to bring!</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">What is your late policy? <span class="icon">+</span></button>
+                        <div class="faq-answer"><p>Please try to arrive on time! If you are running more than 15 minutes late, please text me immediately. Depending on the schedule, we may need to reschedule your appointment and you will forfeit your deposit.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">Does my hair need to be washed before coming? <span class="icon">+</span></button>
+                        <div class="faq-answer"><p>Yes, please arrive with your hair fully washed and free of any heavy product buildup. Blowdrying and detangling are included in your service at no extra cost!</p></div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -288,38 +453,37 @@
                     <!-- Time Slots & Confirm -->
                     <div class="booking-details-card reveal-right">
                         <div class="booking-details-content">
-                            <h3>1. Choose <span>Braids or Locs</span></h3>
-                            
-                            <div class="style-selection-wrapper">
-                                <select id="bookingService" class="glossy-select">
+                            <h3>1. Select <span>Service</span></h3>
+                            <div class="form-group" style="margin: 20px 0;">
+                                <select id="bookingService" class="booking-select">
                                     <option value="" disabled selected>-- Choose Braids or Locs --</option>
                                     <optgroup label="Women's Services">
-                                        <option value="Small knotless braids ($180)">Small knotless braids ($180)</option>
-                                        <option value="Smedium knotless braids ($140)">Smedium knotless braids ($140)</option>
-                                        <option value="Medium knotless braids ($150)">Medium knotless braids ($150)</option>
-                                        <option value="Large knotless braids ($110)">Large knotless braids ($110)</option>
-                                        <option value="Boho Knotless Braids ($150)">Boho Knotless Braids ($150)</option>
-                                        <option value="Faux locs ($150)">Faux locs ($150)</option>
-                                        <option value="Butterfly locs ($110)">Butterfly locs ($110)</option>
-                                        <option value="Cornrows with extensions ($80)">Cornrows with extensions ($80)</option>
-                                        <option value="Stitch braids with extensions ($90)">Stitch braids with extensions ($90)</option>
-                                        <option value="Fulani braids ($120)">Fulani braids ($120)</option>
-                                        <option value="Small box braids ($115)">Small box braids ($115)</option>
-                                        <option value="Medium box braids ($100)">Medium box braids ($100)</option>
-                                        <option value="Large box braids ($90)">Large box braids ($90)</option>
+                                        <option value="Small knotless braids">Small knotless braids (From $180)</option>
+                                        <option value="Smedium knotless braids">Smedium knotless braids (From $140)</option>
+                                        <option value="Medium knotless braids">Medium knotless braids ($150)</option>
+                                        <option value="Large knotless braids">Large knotless braids ($110)</option>
+                                        <option value="Boho Knotless Braids">Boho Knotless Braids (From $150)</option>
+                                        <option value="Faux locs">Faux locs ($150)</option>
+                                        <option value="Butterfly locs">Butterfly locs ($110)</option>
+                                        <option value="Cornrows with extensions">Cornrows with extensions ($80)</option>
+                                        <option value="Stitch braids with extensions">Stitch braids with extensions ($90)</option>
+                                        <option value="Fulani braids">Fulani braids ($120)</option>
+                                        <option value="Small box braids">Small box braids ($115)</option>
+                                        <option value="Medium box braids">Medium box braids ($100)</option>
+                                        <option value="Large box braids">Large box braids ($90)</option>
                                     </optgroup>
                                     <optgroup label="Men's Services">
-                                        <option value="Pop Smoke braids ($50)">Pop Smoke braids ($50)</option>
-                                        <option value="Stitch braids ($60)">Stitch braids ($60)</option>
-                                        <option value="Cornrows ($55)">Cornrows ($55)</option>
-                                        <option value="Men's Twists ($60)">Men's Twists ($60)</option>
-                                        <option value="Single braids (plaits) ($65)">Single braids (plaits) ($65)</option>
-                                        <option value="Two strand Twist ($65)">Two strand Twist ($65)</option>
+                                        <option value="Pop Smoke braids">Pop Smoke braids ($50)</option>
+                                        <option value="Men's Stitch braids">Stitch braids ($60)</option>
+                                        <option value="Men's Cornrows">Cornrows ($55)</option>
+                                        <option value="Men's Twists">Men's Twists ($60)</option>
+                                        <option value="Single braids (plaits)">Single braids (plaits) ($65)</option>
+                                        <option value="Two strand Twist">Two strand Twist ($65)</option>
                                     </optgroup>
                                     <optgroup label="Loc Services">
-                                        <option value="Loc retwist ($70)">Loc retwist ($70)</option>
-                                        <option value="Starter locs ($100)">Starter locs ($100)</option>
-                                        <option value="Retwist + Styling ($90)">Retwist + Styling ($90)</option>
+                                        <option value="Loc retwist">Loc retwist ($70)</option>
+                                        <option value="Starter locs">Starter locs ($100)</option>
+                                        <option value="Retwist + Styling">Retwist + Styling ($90)</option>
                                     </optgroup>
                                 </select>
                             </div>
@@ -336,6 +500,23 @@
                                 </div>
                             </div>
 
+                            <h3>3. Contact <span>Information</span></h3>
+                            <div class="booking-contact-fields" style="margin-top: 20px;">
+                                <div class="form-group mb-15">
+                                    <input type="text" id="clientName" class="booking-input" placeholder="Your Full Name" required>
+                                </div>
+                                <div class="form-group mb-15">
+                                    <input type="email" id="clientEmail" class="booking-input" placeholder="Email Address" required>
+                                </div>
+                                <div class="form-group mb-15">
+                                    <input type="tel" id="clientPhone" class="booking-input" placeholder="Phone Number (for confirmation text)" required>
+                                </div>
+                                <div class="form-group mb-15" style="display: flex; align-items: center; gap: 10px; background: rgba(197, 160, 89, 0.05); padding: 12px; border-radius: 8px; border: 1px solid rgba(197, 160, 89, 0.1);">
+                                    <input type="checkbox" id="addDesign" style="width: 18px; height: 18px; accent-color: var(--primary-color);">
+                                    <label for="addDesign" style="font-size: 0.9rem; color: var(--text-secondary); cursor: pointer;">Add a design (Heart, Star, etc.) <strong>+$5</strong></label>
+                                </div>
+                            </div>
+
                             <div class="booking-summary">
                                 <button class="btn primary full-width" id="bookingBtn" disabled>Complete Selection First</button>
                             </div>
@@ -345,129 +526,7 @@
             </div>
         </section>
 
-        <!-- Appointment Confirmation Section -->
-        <section class="appt-confirm-section reveal">
-            <div class="container appt-confirm-container">
-                <div class="appt-confirm-title">
-                    <span class="appt-dot">✦</span>
-                    <p>APPOINTMENT CONFIRMATION</p>
-                    <span class="appt-dot">✦</span>
-                </div>
-                <div class="appt-confirm-body">
-                    <p class="appt-italic">You will receive a confirmation email upon booking your appointment.</p>
-                    <p class="appt-italic">Email &amp; text reminders, that include address details, will be sent 48 hours before your appointment.</p>
-                </div>
-                <div class="appt-confirm-icons">
-                    <div class="appt-icon-circle"><i class="fa-solid fa-envelope"></i></div>
-                    <div class="appt-icon-circle"><i class="fa-solid fa-mobile-screen"></i></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ Section -->
-        <section id="faq" class="faq-section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="subtitle">Questions</span>
-                    <h2>Frequently Asked <span>Questions</span></h2>
-                    <p>Everything you need to know before your appointment.</p>
-                </div>
-                <div class="faq-grid">
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>How should I prep my hair?</h3>
-                            <i class="fa-solid fa-plus"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Please arrive with your hair completely detangled, washed, and blow-dried straight with no products added unless you booked the wash and blow-dry add-on.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>What is the late policy?</h3>
-                            <i class="fa-solid fa-plus"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>A 15-minute grace period is given. After 15 minutes, a $15 late fee will be applied. After 30 minutes, your appointment will be canceled and your deposit forfeited.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>Is hair included in the price?</h3>
-                            <i class="fa-solid fa-plus"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Hair is not included in the base price unless otherwise stated. Please check the specific style details or contact me beforehand.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>Can I change my style the day of?</h3>
-                            <i class="fa-solid fa-plus"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Style changes must be communicated at least 48 hours in advance to ensure enough time is allocated. Same-day changes are generally not permitted.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Client Reviews System -->
-        <section id="reviews" class="reviews-section dark-glossy-section">
-            <div class="container reviews-container">
-                <div class="section-header">
-                    <span class="subtitle">Testimonials</span>
-                    <h2>Leave A <span>Review</span></h2>
-                </div>
-                <div class="review-form-wrapper glossy-card">
-                    <form id="reviewForm" class="review-form">
-                        <div class="form-group">
-                            <input type="text" id="reviewName" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <select id="reviewRating" required>
-                                <option value="" disabled selected>Select a Rating</option>
-                                <option value="5">⭐⭐⭐⭐⭐ - 5 Stars</option>
-                                <option value="4">⭐⭐⭐⭐ - 4 Stars</option>
-                                <option value="3">⭐⭐⭐ - 3 Stars</option>
-                                <option value="2">⭐⭐ - 2 Stars</option>
-                                <option value="1">⭐ - 1 Star</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="reviewMessage" placeholder="Tell us about your experience..." rows="4" required></textarea>
-                        </div>
-                        <button type="submit" class="btn primary-gold">Submit Review</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <!-- Luxury Success Modal -->
-        <div id="bookingSuccessModal" class="modal-overlay">
-            <div class="modal-content glossy-card">
-                <div class="modal-header">
-                    <h2 class="cursive-title">Booking Complete</h2>
-                    <button id="closeModalBtn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-                <div class="modal-body">
-                    <i class="fa-solid fa-circle-check success-icon"></i>
-                    <p class="modal-desc">Thank you for choosing BeautyybyyKiKi!</p>
-                    <div class="modal-details">
-                        <p><strong>Date:</strong> <span id="modalDate"></span></p>
-                        <p><strong>Time:</strong> <span id="modalTime"></span></p>
-                    </div>
-                    <p class="modal-desc" style="margin-top: 15px;">A confirmation email has been sent to your inbox. As a reminder, a <strong>$15 non-refundable deposit</strong> is required via DM to secure your spot.</p>
-                </div>
-                <div class="modal-footer">
-                    <a href="https://instagram.com" target="_blank" class="btn primary-gold">DM to Pay Deposit</a>
-                </div>
-            </div>
-        </div>
-
         <!-- Contact Section -->
-
         <section id="contact" class="contact">
             <div class="container">
                 <div class="contact-grid">
@@ -477,24 +536,24 @@
                         <div class="contact-details">
                             <div class="detail-item">
                                 <i class="fa-solid fa-location-dot"></i>
-                                <span>123 Beauty Lane, Suite 101, New York NY</span>
+                                <span>Vaughan, Ontario</span>
                             </div>
                             <div class="detail-item">
                                 <i class="fa-solid fa-phone"></i>
-                                <span>(555) 123-4567</span>
+                                <span><a href="tel:6479067715" style="color: inherit; text-decoration: none;">(647) 906-7715</a></span>
                             </div>
                             <div class="detail-item">
                                 <i class="fa-solid fa-envelope"></i>
-                                <span>hello@beautyybyykiki.com</span>
+                                <span><a href="mailto:kikikanu12@gmail.com" style="color: inherit; text-decoration: none;">kikikanu12@gmail.com</a></span>
                             </div>
                         </div>
                         <div class="social-links">
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="https://www.instagram.com/beautyybyykiki/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="https://snapchat.com/t/gYFWogtz" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-snapchat"></i></a>
                             <a href="#"><i class="fa-brands fa-tiktok"></i></a>
                         </div>
                     </div>
-                    <form id="contactForm" class="contact-form">
+                    <form class="contact-form" id="mainContactForm">
                         <div class="form-group">
                             <input type="text" id="contactName" placeholder="Full Name" required>
                         </div>
@@ -504,7 +563,7 @@
                         <div class="form-group">
                             <textarea id="contactMessage" placeholder="Your Message" rows="5" required></textarea>
                         </div>
-                        <button type="submit" class="btn primary" id="contactSubmitBtn">Send Message</button>
+                        <button type="submit" id="contactSubmit" class="btn primary">Send Message</button>
                     </form>
                 </div>
             </div>
@@ -523,6 +582,100 @@
         </div>
     </footer>
 
+    <!-- Success Modal -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-content glass-card">
+            <div class="modal-icon">✨</div>
+            <h2 class="modal-title">Appointment Requested!</h2>
+            <p id="modalMessage" class="modal-message"></p>
+            <button id="closeModal" class="btn-primary">Perfect</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- Firebase SDK (Compat versions for simple JS integration) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    
     <script src="main.js"></script>
+    <script>
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Animation
+        const heroTl = gsap.timeline({ defaults: { ease: "expo.out" } });
+        
+        // Split text reveal logic
+        gsap.to(".hero .reveal-text-line", {
+            y: "0%",
+            duration: 1.5,
+            stagger: 0.1,
+            delay: 0.5,
+            ease: "expo.out"
+        });
+
+        heroTl.from(".hero-content .subtitle", { y: 20, opacity: 0, duration: 1, delay: 0.5 })
+              .from(".hero p", { y: 20, opacity: 0, duration: 1 }, "-=1")
+              .from(".hero-actions", { y: 20, opacity: 0, duration: 1 }, "-=0.8");
+
+        // Cursor logic removed per request
+
+        // Magnetic Logic
+        const magneticElements = document.querySelectorAll('.magnetic');
+        magneticElements.forEach((el) => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                gsap.to(el, {
+                    x: x * 0.35,
+                    y: y * 0.35,
+                    duration: 0.6,
+                    ease: "power2.out"
+                });
+            });
+
+            el.addEventListener('mouseleave', () => {
+                gsap.to(el, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "elastic.out(1, 0.3)"
+                });
+            });
+        });
+
+        // Section Reveal
+        gsap.utils.toArray("section").forEach(section => {
+            gsap.from(section, {
+                opacity: 0,
+                y: 50,
+                duration: 1.2,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                }
+            });
+        });
+
+        // Service Card Hover & Reveal
+        gsap.utils.toArray(".service-card").forEach(card => {
+            gsap.from(card, {
+                opacity: 0,
+                scale: 0.95,
+                y: 30,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 90%"
+                }
+            });
+        });
+
+    </script>
 </body>
 </html>
