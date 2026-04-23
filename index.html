@@ -17,6 +17,10 @@
     <!-- EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
+    <!-- Firebase (Compat version) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -189,12 +193,14 @@
                         <h3>Women's prices</h3>
                         <ul class="price-list">
                             <li><span>Small knotless braids</span> <span>$180</span></li>
+                            <li><span>Smedium knotless braids</span> <span>$140</span></li>
                             <li><span>Medium knotless braids</span> <span>$150</span></li>
                             <li><span>Large knotless braids</span> <span>$110</span></li>
                             <li><span>Faux locs</span> <span>$150</span></li>
-                            <li><span>Boho braids</span> <span>$185</span></li>
+                            <li><span>Boho braids</span> <span>$150</span></li>
                             <li><span>Butterfly locs</span> <span>$110</span></li>
                             <li><span>Cornrows with extensions</span> <span>$80</span></li>
+                            <li><span>Stitch braids with extensions</span> <span>$90</span></li>
                             <li><span>Fulani braids</span> <span>$120</span></li>
                             <li><span>Small box braids</span> <span>$115</span></li>
                             <li><span>Medium box braids</span> <span>$100</span></li>
@@ -208,6 +214,7 @@
                             <li><span>Single braids (plaits)</span> <span>$65</span></li>
                             <li><span>Cornrows</span> <span>$55</span></li>
                             <li><span>Stitch braids</span> <span>$60</span></li>
+                            <li><span>Pop Smoke braids</span> <span>$50</span></li>
                             <li><span>Twists</span> <span>$60</span></li>
                             <li><span>Two strand Twist</span> <span>$65</span></li>
                         </ul>
@@ -281,7 +288,43 @@
                     <!-- Time Slots & Confirm -->
                     <div class="booking-details-card reveal-right">
                         <div class="booking-details-content">
-                            <h3>Select Date & <span>Time</span></h3>
+                            <h3>1. Choose <span>Braids or Locs</span></h3>
+                            
+                            <div class="style-selection-wrapper">
+                                <select id="bookingService" class="glossy-select">
+                                    <option value="" disabled selected>-- Choose Braids or Locs --</option>
+                                    <optgroup label="Women's Services">
+                                        <option value="Small knotless braids ($180)">Small knotless braids ($180)</option>
+                                        <option value="Smedium knotless braids ($140)">Smedium knotless braids ($140)</option>
+                                        <option value="Medium knotless braids ($150)">Medium knotless braids ($150)</option>
+                                        <option value="Large knotless braids ($110)">Large knotless braids ($110)</option>
+                                        <option value="Boho Knotless Braids ($150)">Boho Knotless Braids ($150)</option>
+                                        <option value="Faux locs ($150)">Faux locs ($150)</option>
+                                        <option value="Butterfly locs ($110)">Butterfly locs ($110)</option>
+                                        <option value="Cornrows with extensions ($80)">Cornrows with extensions ($80)</option>
+                                        <option value="Stitch braids with extensions ($90)">Stitch braids with extensions ($90)</option>
+                                        <option value="Fulani braids ($120)">Fulani braids ($120)</option>
+                                        <option value="Small box braids ($115)">Small box braids ($115)</option>
+                                        <option value="Medium box braids ($100)">Medium box braids ($100)</option>
+                                        <option value="Large box braids ($90)">Large box braids ($90)</option>
+                                    </optgroup>
+                                    <optgroup label="Men's Services">
+                                        <option value="Pop Smoke braids ($50)">Pop Smoke braids ($50)</option>
+                                        <option value="Stitch braids ($60)">Stitch braids ($60)</option>
+                                        <option value="Cornrows ($55)">Cornrows ($55)</option>
+                                        <option value="Men's Twists ($60)">Men's Twists ($60)</option>
+                                        <option value="Single braids (plaits) ($65)">Single braids (plaits) ($65)</option>
+                                        <option value="Two strand Twist ($65)">Two strand Twist ($65)</option>
+                                    </optgroup>
+                                    <optgroup label="Loc Services">
+                                        <option value="Loc retwist ($70)">Loc retwist ($70)</option>
+                                        <option value="Starter locs ($100)">Starter locs ($100)</option>
+                                        <option value="Retwist + Styling ($90)">Retwist + Styling ($90)</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            <h3>2. Select Date & <span>Time</span></h3>
 
                             <p class="details-desc" style="margin-top: 15px;">Selected Date: <strong id="selectedDateLabel">None</strong></p>
                             

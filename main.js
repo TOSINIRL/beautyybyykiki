@@ -34,9 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
     revealOnScroll(); // Run once on load
 
     // --- EmailJS Initialization ---
-    // (Ensure you replace these with your actual EmailJS public key in production)
     if (typeof emailjs !== 'undefined') {
-        // emailjs.init("YOUR_PUBLIC_KEY");
+        emailjs.init("UlOSIGfDmCQAsy0Aj"); // REPLACE THIS WITH YOUR REAL PUBLIC KEY
     }
 
     // --- Contact Form Handling ---
@@ -48,13 +47,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const originalText = contactSubmitBtn.innerText;
             contactSubmitBtn.innerText = "Sending...";
             
-            // Example of EmailJS call:
-            // emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', '#contactForm')
-            setTimeout(() => {
-                alert('Thank you for your message! KiKi will get back to you soon.');
-                contactForm.reset();
-                contactSubmitBtn.innerText = originalText;
-            }, 1000);
+            if (typeof emailjs !== 'undefined') {
+                emailjs.sendForm('service_aj78gfg', 'template_7t6ikwf', '#contactForm')
+                    .then(() => {
+                        alert('Thank you for your message! KiKi will get back to you soon.');
+                        contactForm.reset();
+                        contactSubmitBtn.innerText = originalText;
+                    }).catch(error => {
+                        console.error('EmailJS Error:', error);
+                        alert('Failed to send message. Please confirm EmailJS keys.');
+                        contactSubmitBtn.innerText = originalText;
+                    });
+            } else {
+                setTimeout(() => {
+                    alert('Testing Mode: Contact Email triggered.');
+                    contactForm.reset();
+                    contactSubmitBtn.innerText = originalText;
+                }, 1000);
+            }
         });
     }
 
@@ -67,12 +77,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const originalText = btn.innerText;
             btn.innerText = "Submitting Review...";
 
-            // Send via EmailJS to moderation inbox
-            setTimeout(() => {
-                alert('Review submitted for moderation. Thank you for your feedback!');
-                reviewForm.reset();
-                btn.innerText = originalText;
-            }, 1000);
+            if (typeof emailjs !== 'undefined') {
+                emailjs.sendForm('service_aj78gfg', 'template_7t6ikwf', '#reviewForm')
+                    .then(() => {
+                        alert('Review submitted for moderation. Thank you for your feedback!');
+                        reviewForm.reset();
+                        btn.innerText = originalText;
+                    }).catch(error => {
+                        console.error('EmailJS Error:', error);
+                        alert('Failed to submit review. Please confirm EmailJS keys.');
+                        btn.innerText = originalText;
+                    });
+            } else {
+                setTimeout(() => {
+                    alert('Testing Mode: Review Email triggered.');
+                    reviewForm.reset();
+                    btn.innerText = originalText;
+                }, 1000);
+            }
         });
     }
 
@@ -188,6 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookingBtn = document.getElementById('bookingBtn');
     const prevMonthBtn = document.getElementById('prevMonth');
     const nextMonthBtn = document.getElementById('nextMonth');
+    const bookingService = document.getElementById('bookingService');
     
     // Modal Elements
     const successModal = document.getElementById('bookingSuccessModal');
@@ -195,18 +218,70 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalDate = document.getElementById('modalDate');
     const modalTime = document.getElementById('modalTime');
 
-    // --- Mock Firebase DB for Bookings ---
-    // Simulates database to prevent double bookings. Replace with actual Firebase Firestore.
-    let mockDatabase = JSON.parse(localStorage.getItem('kiki_bookings')) || {};
-    
-    const isSlotBooked = (date, time) => {
-        return mockDatabase[date] && mockDatabase[date].includes(time);
+    // --- Firebase DB Initialization for Bookings ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyDvPe8aK-AGsiCg_k409JWaV_xWezp_xFQ",
+        authDomain: "beautyybyykiki.firebaseapp.com",
+        projectId: "beautyybyykiki",
+        storageBucket: "beautyybyykiki.firebasestorage.app",
+        messagingSenderId: "267995370922",
+        appId: "1:267995370922:web:a45c9d55b9c7c1de5fc7d3"
     };
 
-    const bookSlotInFirebase = (date, time) => {
-        if (!mockDatabase[date]) mockDatabase[date] = [];
-        mockDatabase[date].push(time);
-        localStorage.setItem('kiki_bookings', JSON.stringify(mockDatabase));
+    let db;
+    try {
+        if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== "YOUR_API_KEY") {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+        } else {
+            console.warn("Firebase config is incomplete. Using Local Storage Fallback.");
+        }
+    } catch (e) {
+        console.warn("Firebase initialization error. Using Local Storage Fallback.", e);
+    }
+
+    let activeBookedSlots = []; // Cache for currently viewed date
+    
+    // Fetch bookings for the selected date
+    const fetchBookingsForDate = async (dateStr) => {
+        if (!db) {
+            const mockDb = JSON.parse(localStorage.getItem('kiki_bookings')) || {};
+            return mockDb[dateStr] || [];
+        }
+        try {
+            const docRef = db.collection("bookings").doc(dateStr);
+            const docSnap = await docRef.get();
+            if (docSnap.exists) {
+                return docSnap.data().bookedSlots || [];
+            }
+        } catch (error) {
+            console.error("Error fetching available slots:", error);
+        }
+        return [];
+    };
+
+    // Save a booking purely to Firebase
+    const bookSlotInFirebase = async (dateStr, timeStr) => {
+        if (!db) {
+            const mockDb = JSON.parse(localStorage.getItem('kiki_bookings')) || {};
+            if (!mockDb[dateStr]) mockDb[dateStr] = [];
+            mockDb[dateStr].push(timeStr);
+            localStorage.setItem('kiki_bookings', JSON.stringify(mockDb));
+            return true;
+        }
+
+        try {
+            const docRef = db.collection("bookings").doc(dateStr);
+            await docRef.set({
+                bookedSlots: firebase.firestore.FieldValue.arrayUnion(timeStr),
+                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+            return true;
+        } catch (error) {
+            console.error("Error writing to Firebase:", error);
+            alert("Error connecting to booking database. Please check your config.");
+            return false;
+        }
     };
 
     let currentDate = new Date(2025, 11, 1); // December 2025 as default
@@ -214,21 +289,30 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedStyle = null;
     let selectedTime = null;
 
+    if (bookingService) {
+        bookingService.addEventListener('change', () => {
+            selectedStyle = bookingService.value;
+            updateBookingButton();
+        });
+    }
+
     const updateBookingButton = () => {
         if (!bookingBtn) return;
-        if (activeSelection && selectedTime) {
+        if (activeSelection && selectedTime && selectedStyle) {
             bookingBtn.disabled = false;
             bookingBtn.classList.remove('disabled');
-            bookingBtn.innerText = `Book Appointment at ${selectedTime}`;
+            bookingBtn.innerText = `Book ${selectedStyle} at ${selectedTime}`;
             bookingBtn.style.opacity = "1";
         } else {
             bookingBtn.disabled = true;
             bookingBtn.classList.add('disabled');
             bookingBtn.style.opacity = "0.5";
-            if (!activeSelection) {
-                bookingBtn.innerText = "Start by Selecting a Date";
+            if (!selectedStyle) {
+                bookingBtn.innerText = "1. Choose a Style Above";
+            } else if (!activeSelection) {
+                bookingBtn.innerText = "2. Pick a Date on Calendar";
             } else {
-                bookingBtn.innerText = "Next: Pick a Time";
+                bookingBtn.innerText = "3. Pick a Time Slot";
             }
         }
     };
@@ -241,37 +325,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (bookingBtn) {
-        bookingBtn.addEventListener('click', () => {
-            if (!activeSelection || !selectedTime) return;
+        bookingBtn.addEventListener('click', async () => {
+            if (!activeSelection || !selectedTime || !selectedStyle) return;
             
-            // 1. Firebase Check: Prevent double booking at the last second
-            if (isSlotBooked(activeSelection, selectedTime)) {
+            const originalText = bookingBtn.innerText;
+            bookingBtn.innerText = "Verifying Availability...";
+            bookingBtn.disabled = true;
+
+            // 1. Firebase Live Check: Prevent double booking at the last second
+            const verifyBookedSlots = await fetchBookingsForDate(activeSelection);
+            if (verifyBookedSlots.includes(selectedTime)) {
                 alert("Sorry, this time slot was just booked by someone else. Please choose another time.");
-                renderTimeSlots(); // Refresh to show it as disabled
+                activeBookedSlots = verifyBookedSlots;
+                renderTimeSlots(); // Refresh UI
                 selectedTime = null;
+                bookingBtn.innerText = originalText;
                 updateBookingButton();
                 return;
             }
 
-            const originalText = bookingBtn.innerText;
             bookingBtn.innerText = "Processing Booking...";
-            bookingBtn.disabled = true;
 
-            // 2. Process via EmailJS and Save to "Firebase"
-            setTimeout(() => {
-                bookSlotInFirebase(activeSelection, selectedTime);
+            // 2. Process Booking via Firebase
+            const success = await bookSlotInFirebase(activeSelection, selectedTime);
+            
+            if (success) {
+                // 3. Send Conf Email via EmailJS
+                if (typeof emailjs !== 'undefined' && emailjs.send) {
+                    emailjs.send('service_aj78gfg', 'template_ogx7wxe', {
+                        client_date: activeSelection,
+                        client_time: selectedTime,
+                        client_service: selectedStyle
+                    }).catch(err => console.error('Failed to send booking email:', err));
+                }
+
+                activeBookedSlots.push(selectedTime);
                 renderTimeSlots(); // Update UI
                 
-                // Show Success Modal
                 if (modalDate) modalDate.innerText = activeSelection;
                 if (modalTime) modalTime.innerText = selectedTime;
                 if (successModal) successModal.classList.add('active');
+            }
 
-                // Reset Button
-                bookingBtn.innerText = originalText;
-                selectedTime = null;
-                updateBookingButton();
-            }, 1500);
+            bookingBtn.innerText = originalText;
+            selectedTime = null;
+            updateBookingButton();
         });
     }
 
@@ -307,7 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentDate.getMonth() === 11 && d === 3) dayEl.classList.add('day-active-selected');
             if (currentDate.getMonth() === 11 && d === 27) dayEl.classList.add('day-selected-secondary');
 
-            dayEl.addEventListener('click', () => {
+            dayEl.addEventListener('click', async () => {
                 if (dayEl.classList.contains('day-unavailable')) return;
                 
                 document.querySelectorAll('.calendar-day').forEach(el => {
@@ -317,6 +415,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 dayEl.classList.add('day-active-selected');
                 activeSelection = `${months[currentDate.getMonth()]} ${d}, ${currentDate.getFullYear()}`;
+                
+                selectedDateLabel.innerText = "Checking availability...";
+                timeGrid.innerHTML = '<div class="time-placeholder">Loading live slots...</div>';
+                
+                activeBookedSlots = await fetchBookingsForDate(activeSelection);
+                
                 selectedDateLabel.innerText = activeSelection;
                 updateBookingButton();
                 renderTimeSlots();
@@ -341,8 +445,8 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.add('time-btn');
             btn.innerText = t;
             
-            // Check Firebase mock for availability
-            if (activeSelection && isSlotBooked(activeSelection, t)) {
+            // Check Live Firebase availability
+            if (activeSelection && activeBookedSlots.includes(t)) {
                 btn.disabled = true;
                 btn.style.opacity = "0.3";
                 btn.style.textDecoration = "line-through";

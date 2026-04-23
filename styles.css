@@ -618,77 +618,50 @@ section {
 
 /* Service Selection Styling */
 .style-selection-wrapper {
-    margin: 25px 0 35px;
+    margin: 20px 0 30px;
 }
 
-.style-selection-wrapper label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.style-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 15px;
-}
-
-.style-item {
-    padding: 15px 22px;
-    border: 1px solid var(--glass-border);
-    border-radius: 14px;
+.glossy-select {
+    width: 100%;
+    padding: 16px 20px;
     background: #FFFFFF;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    font-family: var(--ui-font);
+    font-size: 1rem;
+    color: var(--text-main);
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    background-size: 16px;
     cursor: pointer;
     transition: var(--transition-smooth);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
-.style-item:hover {
-    background: rgba(255, 255, 255, 0.5);
+.glossy-select:focus {
+    outline: none;
     border-color: var(--primary-color);
+    box-shadow: 0 8px 25px rgba(184, 158, 128, 0.15);
 }
 
-.style-item.selected {
-    background: #FFF;
-    border-color: var(--text-main);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
-}
-
-.style-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.style-name {
+.glossy-select optgroup {
     font-family: var(--ui-font);
-    font-weight: 600;
-    font-size: 1.05rem;
-    color: var(--text-main);
-}
-
-.style-price {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-.check-icon {
-    font-size: 1.3rem;
+    font-weight: 700;
+    font-size: 0.9rem;
     color: var(--primary-color);
-    opacity: 0;
-    transform: scale(0.5);
-    transition: var(--transition-smooth);
+    background: #FFF;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px 0;
 }
 
-.style-item.selected .check-icon {
-    opacity: 1;
-    transform: scale(1);
+.glossy-select option {
+    font-family: var(--body-font);
+    color: var(--text-main);
+    background: #FFF;
+    padding: 12px;
 }
 
 /* Time Grid Configuration */
